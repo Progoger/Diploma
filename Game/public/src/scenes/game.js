@@ -11,7 +11,8 @@ export default class Game extends Phaser.Scene {
     preload() {
         this.load.image('backGround', 'src/assets/2.png');
         this.load.image('card', 'src/assets/card.png');
-        this.load.image('wallet', 'src/assets/wallet.png');
+        this.load.image('income', 'src/assets/income.png');
+        this.load.image('expense', 'src/assets/expense.png');
     }
 
     create() {
@@ -21,7 +22,7 @@ export default class Game extends Phaser.Scene {
             for (let i = 0; i < 10; i++) {
                 let card = new Card(this, "income");
                 card.render(x + (i*interval), y, "card");
-                console.log(card.type);
+                console.log(card.card_type);
             }
         };
 
@@ -29,10 +30,10 @@ export default class Game extends Phaser.Scene {
         self.dealCards(100, 300, 160);
 
         let income = new Zone(this, "income");
-        income.renderZone(100, 773, "wallet");
+        income.renderZone(100, 773, "income");
     
         let expense = new Zone(this, "expense");
-        expense.renderZone(1540, 773, "wallet");
+        expense.renderZone(1540, 773, "expense");
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
@@ -46,26 +47,37 @@ export default class Game extends Phaser.Scene {
         }, this);
 
         this.input.on('dragenter', function (pointer, gameObject, dropZone) {
-
-            zone.setTint(0x00ff00);
-    
+            if (dropZone.texture.key === "income"){
+                dropZone.setTint(0x00ff00);
+            }
+            else{
+                expense.setTint(0x00ff00);
+            }
         });
     
         this.input.on('dragleave', function (pointer, gameObject, dropZone) {
-    
-            zone.clearTint();
-    
+            if (dropZone.texture.key === "income"){
+                dropZone.clearTint();
+            }
+            else{
+                expense.clearTint();
+            }
         });
     
         this.input.on('drop', function (pointer, gameObject, dropZone) {
     
             gameObject.x = dropZone.x;
             gameObject.y = dropZone.y;
-            gameObject.setScale(0.2);
+            gameObject.setScale(0.01);
     
             gameObject.input.enabled = false;
     
-            zone.clearTint();
+            if (dropZone.texture.key === "income"){
+                dropZone.clearTint();
+            }
+            else{
+                expense.clearTint();
+            }
     
         });
     
