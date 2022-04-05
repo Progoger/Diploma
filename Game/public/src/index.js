@@ -1,13 +1,14 @@
-import MainMenu from "./scenes/mainMenu.js";
-import Game from "./scenes/mainMenu.js";
+import mainMenu from "./scenes/mainMenu.js";
+import Level1 from "./scenes/level1.js";
 
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.WEBGL,
     parent: "phaser-example",
     width: innerWidth,
     height: innerHeight,
     scene: [
-        MainMenu
+        mainMenu,
+        Level1
     ]
 }
 const game = new Phaser.Game(config);
