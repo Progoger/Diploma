@@ -1,43 +1,117 @@
 import Card from '../helpers/card.js';
 import Zone from '../helpers/zone.js';
+import { getRandomInt } from '../helpers/functions.js';'../helpers/functions.js';
 
 let score = 0;
 
 export default class Level1 extends Phaser.Scene {
+    
     constructor() {
         super({
             key: 'Level1'
         });
         this.score = 0;
+        this.cards = new Array(
+            'income_0',
+            'income_1',
+            'income_2',
+            'income_3',
+            'income_4',
+            'income_5',
+            'income_6',
+            'income_7',
+            'income_8',
+            'income_9',
+            'income_10',
+            'expense_0',
+            'expense_1',
+            'expense_2',
+            'expense_3',
+            'expense_4',
+            'expense_5',
+            'expense_6',
+            'expense_7',
+            'expense_8'
+            )
+
+        this.len = 19;
     }
 
     preload() {
-        this.load.image('backGround', 'src/assets/2.png');
-        this.load.image('income_card', 'src/assets/card.png');
-        this.load.image('expense_card', 'src/assets/card.png');
-        this.load.image('income', 'src/assets/income.png');
-        this.load.image('expense', 'src/assets/expense.png');
+        
+        this.load.image('bg', 'src/assets/common/bg.png');
+        this.load.image('complete', 'src/assets/common/complete.png');
+        this.load.image('help', 'src/assets/common/help.png');
+        this.load.image('progress', 'src/assets/common/progress.png');
+        this.load.image('statistics', 'src/assets/common/statistics.png');
+        this.load.image('score', 'src/assets/common/score.png');
+        this.load.image('expense_0', 'src/assets/level1/expense0.png');
+        this.load.image('expense_1', 'src/assets/level1/expense1.png');
+        this.load.image('expense_2', 'src/assets/level1/expense2.png');
+        this.load.image('expense_3', 'src/assets/level1/expense3.png');
+        this.load.image('expense_4', 'src/assets/level1/expense4.png');
+        this.load.image('expense_5', 'src/assets/level1/expense5.png');
+        this.load.image('expense_6', 'src/assets/level1/expense6.png');
+        this.load.image('expense_7', 'src/assets/level1/expense7.png');
+        this.load.image('expense_8', 'src/assets/level1/expense8.png');
+        this.load.image('income_0', 'src/assets/level1/income0.png');
+        this.load.image('income_1', 'src/assets/level1/income1.png');
+        this.load.image('income_2', 'src/assets/level1/income2.png');
+        this.load.image('income_3', 'src/assets/level1/income3.png');
+        this.load.image('income_4', 'src/assets/level1/income4.png');
+        this.load.image('income_5', 'src/assets/level1/income5.png');
+        this.load.image('income_6', 'src/assets/level1/income6.png');
+        this.load.image('income_7', 'src/assets/level1/income7.png');
+        this.load.image('income_8', 'src/assets/level1/income8.png');
+        this.load.image('income_9', 'src/assets/level1/income9.png');
+        this.load.image('income_10', 'src/assets/level1/income10.png');
+        this.load.image('income', 'src/assets/level1/income.png');
+        this.load.image('expense', 'src/assets/level1/expense.png');
     }
 
     create() {
-        let self = this;
+        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
+        this.add.sprite(innerWidth-75, innerHeight-75, 'complete').setScale(0.1, 0.1);
+        this.add.sprite(innerWidth-75, innerHeight/2-135, 'help').setScale(0.1, 0.1);
+        this.add.sprite(innerWidth-75, innerHeight/2, 'progress').setScale(0.1, 0.1);
+        this.add.sprite(innerWidth-75, innerHeight/2+135, 'statistics').setScale(0.1, 0.1);
+        this.add.sprite(175, 75, 'score').setScale(0.15, 0.15);
+        var textEntry = this.add.text(220, 40, score, { font: '75px Courier', fill: '#ffede4' });
 
-        this.dealCards = (x, y, interval, sprite) => {
-            for (let i = 0; i < 10; i++) {
-                let card = new Card(this, "income");
-                card.render(x + (i*interval), y, sprite);
-                console.log(card.card_type);
+        let index = getRandomInt(this.len);
+        let card = new Card(this, this.cards[index].split('_')[0]);
+        card.render(175, innerHeight/2, this.cards[index]);
+        this.cards.splice(index, 1);
+        index = getRandomInt(this.len-1);
+        card = new Card(this, this.cards[index].split('_')[0]);
+        card.render(175+252*1.15, innerHeight/2, this.cards[index]);
+        this.cards.splice(index, 1);
+
+        console.log(this.cards);
+
+        this.dealCards = (x, y, interval, a, n) => {
+            for (let i = a; i < n; i++) {
+                index = getRandomInt(this.len-i-2);
+                console.log(index);
+                console.log(this.len-i-2);
+                console.log(this.cards);
+                card = new Card(this, this.cards[index].split('_')[0]);
+                card.render(x - ((i+1)*interval), y, this.cards[index]);
+                this.cards.splice(index, 1);
             }
         };
 
-        self.dealCards(100, 100, 140, "income_card");
-        self.dealCards(100, 300, 140, "expense_card");
+        this.dealCards(innerWidth-378, innerHeight/2, 252*0.15, 0, 17);
+
+        card = new Card(this, this.cards[0].split('_')[0]);
+        card.render(175+252*2.3, innerHeight/2, this.cards[0]);
+        this.cards.splice(0, 1);
 
         let income = new Zone(this, "income");
-        income.renderZone(100, 580, "income");
+        income.renderZone(innerWidth*7/10, innerHeight*0.95, "income");
     
         let expense = new Zone(this, "expense");
-        expense.renderZone(1400, 580, "expense");
+        expense.renderZone(200, innerHeight*9/10, "expense");
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
@@ -51,7 +125,6 @@ export default class Level1 extends Phaser.Scene {
         }, this);
 
         this.input.on('dragenter', function (pointer, gameObject, dropZone) {
-            console.log(gameObject);
             dropZone.setTint(0x00ff00);
         });
     
@@ -63,16 +136,15 @@ export default class Level1 extends Phaser.Scene {
     
             gameObject.x = dropZone.x;
             gameObject.y = dropZone.y;
-            gameObject.setScale(0.01);
+            gameObject.setScale(0);
     
             gameObject.input.enabled = false;
     
             if (dropZone.texture.key === gameObject.texture.key.split('_')[0]){
                 score += 1;
+                textEntry.setText(score);
             }
             console.log(score);
-            console.log(dropZone.texture.key);
-            console.log(gameObject.texture.key);
             dropZone.clearTint();
     
         });
@@ -91,4 +163,5 @@ export default class Level1 extends Phaser.Scene {
     update() {
 
     }
+
 }

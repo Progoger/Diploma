@@ -3,7 +3,7 @@ export default class Zone {
         this.zone_type = zone_type;
 
         this.renderZone = (x, y, sprite) => {
-            let dropZone = scene.add.image(x, y, sprite).setInteractive();
+            let dropZone = scene.add.image(x, y, sprite).setInteractive().setScale(0.1, 0.1);
             dropZone.input.dropZone = true;
             return dropZone;
         }
