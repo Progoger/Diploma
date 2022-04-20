@@ -1,6 +1,7 @@
 import Card from '../helpers/card.js';
 import Zone from '../helpers/zone.js';
 import { getRandomInt } from '../helpers/functions.js';'../helpers/functions.js';
+import { stat_record, stat } from '../helpers/statistics.js';
 
 let score = 0;
 
@@ -11,30 +12,6 @@ export default class Level1 extends Phaser.Scene {
             key: 'Level1'
         });
         this.score = 0;
-        this.cards = new Array(
-            'income_0',
-            'income_1',
-            'income_2',
-            'income_3',
-            'income_4',
-            'income_5',
-            'income_6',
-            'income_7',
-            'income_8',
-            'income_9',
-            'income_10',
-            'expense_0',
-            'expense_1',
-            'expense_2',
-            'expense_3',
-            'expense_4',
-            'expense_5',
-            'expense_6',
-            'expense_7',
-            'expense_8'
-            )
-
-        this.len = 19;
     }
 
     preload() {
@@ -70,8 +47,33 @@ export default class Level1 extends Phaser.Scene {
     }
 
     create() {
+        this.cards = new Array(
+            'income_0',
+            'income_1',
+            'income_2',
+            'income_3',
+            'income_4',
+            'income_5',
+            'income_6',
+            'income_7',
+            'income_8',
+            'income_9',
+            'income_10',
+            'expense_0',
+            'expense_1',
+            'expense_2',
+            'expense_3',
+            'expense_4',
+            'expense_5',
+            'expense_6',
+            'expense_7',
+            'expense_8'
+            )
+
+        this.len = 19;
+
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
-        this.add.sprite(innerWidth-75, innerHeight-75, 'complete').setScale(0.1, 0.1);
+        var complete = this.add.sprite(innerWidth-75, innerHeight-75, 'complete').setInteractive().setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2-135, 'help').setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2, 'progress').setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2+135, 'statistics').setScale(0.1, 0.1);
@@ -86,8 +88,6 @@ export default class Level1 extends Phaser.Scene {
         card = new Card(this, this.cards[index].split('_')[0]);
         card.render(175+252*1.15, innerHeight/2, this.cards[index]);
         this.cards.splice(index, 1);
-
-        console.log(this.cards);
 
         this.dealCards = (x, y, interval, a, n) => {
             for (let i = a; i < n; i++) {
@@ -156,8 +156,17 @@ export default class Level1 extends Phaser.Scene {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-    
         });
+
+        complete.on('pointerdown', function(event) {
+            if (stat.lvl1_completed == false && score > 14){
+                stat.lvl1_completed = true;
+            }
+            stat.lvl1_score = score;
+            console.log(stat.lvl1_completed);
+            console.log(stat.lvl1_score);
+            this.scene.start("mainMenu");
+        }, this)
     }
 
     update() {

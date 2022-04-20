@@ -1,4 +1,5 @@
 let clicked = false;
+import {stat} from '../helpers/statistics.js';
 
 export default class levelChoice extends Phaser.Scene {
     constructor() {
@@ -25,7 +26,18 @@ export default class levelChoice extends Phaser.Scene {
         var help = this.add.image(innerWidth*2/3, innerHeight/5, 'help').setScale(0.1, 0.1).setInteractive();
         var hint = this.add.image(innerWidth*3/4, innerHeight/5, 'hint').setScale(0, 0);
         var level1 = this.add.image(innerWidth/2, innerHeight/5*2, 'level1').setScale(0.25, 0.25).setInteractive();
-        var level2 = this.add.image(innerWidth/2, innerHeight/5*3, 'block').setScale(0.25, 0.25).setInteractive();
+        if (stat.lvl1_completed) {
+            var level2 = this.add.image(innerWidth/2, innerHeight/5*3, 'level2').setScale(0.25, 0.25).setInteractive();
+            
+            level2.on('pointerdown', function (event) {
+                console.log(event);
+                this.scene.start("Level2");
+            }, this);
+        }
+        else{
+            this.add.image(innerWidth/2, innerHeight/5*3, 'block').setScale(0.25, 0.25).setInteractive();
+        }
+        
         var level3 = this.add.image(innerWidth/2, innerHeight/5*4, 'block').setScale(0.25, 0.25).setInteractive();
         level1.on('pointerdown', function (event) {
             console.log(event);
