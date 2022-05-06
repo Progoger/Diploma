@@ -1,15 +1,20 @@
 export default class Cell {
     constructor(scene) {
         this.render = (x, y, sprite) => {
-            let cell = scene.add.image(x, y, sprite).setInteractive().setScale(0.15, 0.15);
-            cell.on('pointerdown', function () {
-                scene.createWindow();
+            this.img = scene.add.image(x, y, sprite).setInteractive().setScale(0.17, 0.17);
+            this.img.active = false;  
+            this.img.setTint(0x696969);
+            this.img.on('pointerdown', function () {
+                if (this.active){
+                    scene.createWindow();
+                }
+                console.log(this);
             });
-            this.width = cell.width*0.15;
-            this.height = cell.height*0.15;
+            this.width = this.img.width*0.17;
+            this.height = this.img.height*0.17;
             this.x = x;
             this.y = y;
-            return cell;
+            return this.img;
         }
     }
 

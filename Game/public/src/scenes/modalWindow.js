@@ -31,7 +31,14 @@ export default class Window extends Phaser.Scene{
         pay.win_i = this.win_i;
         pay.on('pointerdown', function() {
             console.log(textEntry.text);
-            this.lvl2.scene.stop("Window"+this.win_i);
+            let par = this.lvl2.scene.scene;
+            console.log(par);
+            par.cells[par.active_cell].img.active = false;
+            par.cells[par.active_cell].img.setTint(0x696969);
+            par.active_cell += 1;
+            par.cells[par.active_cell].img.active = true;
+            par.cells[par.active_cell].img.setTint(0xffffff);
+            this.lvl2.scene.remove("Window"+this.win_i);
         });
 
         help.on('pointerdown', function (event) {
