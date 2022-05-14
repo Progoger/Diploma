@@ -1,4 +1,4 @@
-import characterCard from '../helpers/characterCard.js';
+import Color from '../helpers/color.js';
 import { stat_record, stat } from '../helpers/statistics.js';
 
 export default class characterCustomization extends Phaser.Scene {
@@ -6,11 +6,16 @@ export default class characterCustomization extends Phaser.Scene {
         super({
             key: 'characterCustomization'
         });
-        this.characters = [];
-        this.activeChar = null;
-        this.appearence = [
-            
-        ];
+        this.colors = [
+            'green',
+            'grey',
+            'blue',
+            'brown',
+            'black',
+            'blonde',
+            'ginger',
+            'brown'
+        ]
     }
 
     preload() {
@@ -46,22 +51,32 @@ export default class characterCustomization extends Phaser.Scene {
         }
 
     create(data) {
+        this.appereance = data['appereance'];
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
         var appCustom = this.add.sprite(innerWidth*0.75, innerHeight/2, 'appCustom').setScale(0.8, 0.8);
-        this.add.image(innerWidth/23, innerHeight/12, 'back').setScale(0.1, 0.1).setInteractive();
-        this.add.image(innerWidth*0.67, innerHeight/3, 'green').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.7525, innerHeight/3, 'grey').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.835, innerHeight/3, 'blue').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.9175, innerHeight/3, 'brown').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.67, innerHeight*0.6, 'black').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.7525, innerHeight*0.6, 'blonde').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.835, innerHeight*0.6, 'ginger').setScale(0.14, 0.14).setInteractive();
-        this.add.image(innerWidth*0.9175, innerHeight*0.6, 'brown').setScale(0.14, 0.14).setInteractive();
+        var back = this.add.image(innerWidth/23, innerHeight/12, 'back').setScale(0.1, 0.1).setInteractive();
+        for (let i = 0; i < 4; i++){
+            var tmp = new Color(this, 1, this.colors[i]);
+            tmp.render(innerWidth*(0.67+0.0825*i), innerHeight/3, this.colors[i]);
+        }
+        for (let i = 0; i < 4; i++){
+            var tmp = new Color(this, 2, this.colors[i+4]);
+            tmp.render(innerWidth*(0.67+0.0825*i), innerHeight*0.6, this.colors[i+4]);
+        }
         this.add.image(innerWidth*0.675, innerHeight*0.86, 'apply').setScale(0.18, 0.18).setInteractive();
-        this.add.image(innerWidth*0.87, innerHeight*0.86, 'continue').setScale(0.18, 0.18).setInteractive();
+        var cont = this.add.image(innerWidth*0.87, innerHeight*0.86, 'continue').setScale(0.18, 0.18).setInteractive();
         this.add.image(innerWidth*0.275, innerHeight*0.9, 'platform').setScale(0.4, 0.4).setInteractive();
-        this.add.image(innerWidth*0.275, innerHeight*0.5, data['appereance']).setScale(0.14, 0.14).setInteractive();
-        
+        this.character = this.add.image(innerWidth*0.275, innerHeight*0.5, this.appereance).setScale(0.14, 0.14).setInteractive();
+
+        back.on('pointerdown', function (event) {
+            this.scene.scene.start("characterCustomization");
+        });
+
+        cont.on('pointerdown', function (event) {
+            stat.character = this.scene.appereance;
+            stat.character_chosed = true;
+            this.scene.scene.start("mainMenu");
+        });
     }
 
     update() {

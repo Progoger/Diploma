@@ -1,6 +1,5 @@
 import Cell from '../helpers/cell.js';
-import Window from '../scenes/modalWindow.js';
-import Wind from '../scenes/wind.js';
+import { stat_record, stat } from '../helpers/statistics.js';
 
 export default class Level2 extends Phaser.Scene {
     
@@ -52,11 +51,12 @@ export default class Level2 extends Phaser.Scene {
         this.load.image('statistics', 'src/assets/common/statistics.png');
         this.load.image('score', 'src/assets/common/score.png');
         this.load.image('character', 'src/assets/common/character.png');
+        this.load.image('avatar', `src/assets/appereance/${stat.gender}/${stat.character.split('_')[0]}/${stat.character}.png`);
     }
 
     create() {
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
-        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
+        this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
         this.add.sprite(innerWidth-75, innerHeight-75, 'complete').setScale(0.09, 0.09);
         this.add.sprite(innerWidth-75, innerHeight/2-130, 'help').setScale(0.09, 0.09);
         this.add.sprite(innerWidth-75, innerHeight/2-20, 'progress').setScale(0.09, 0.09);
@@ -99,7 +99,7 @@ export default class Level2 extends Phaser.Scene {
     }
 
     createWindow(){
-        let sc = this.scene.launch('Wind', {par:this.scene});
+        let sc = this.scene.start('Window', {par:this.scene});
         this.scene.pause();
     }
 }

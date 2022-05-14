@@ -19,26 +19,39 @@ export default class Window extends Phaser.Scene{
         this.load.image('hint', 'src/assets/windows/hint.png');
     }
 
-    create () {
-        var bg = this.add.image(0, 0, 'bg').setScale(0.7, 0.7).setOrigin(0);
-        this.cameras.main.setViewport(this.parent.x, this.parent.y, innerWidth, innerHeight);
-        var input = this.add.image(innerWidth*1.2/10, innerHeight*5.85/10, 'input').setScale(0.2, 0.2);
-        var textEntry = this.add.text(innerWidth/32, innerHeight*5.65/10, '', { font: '32px Courier', fill: '#ffff00' });
-        var help = this.add.image(innerWidth*2.55/10, innerHeight*5.85/10, 'help').setInteractive().setScale(0.08, 0.08);
-        var hint = this.add.image(innerWidth*3.75/10, innerHeight*5.2/10, 'hint').setScale(0, 0);
-        var pay =  this.add.image(innerWidth*1.5/10, innerHeight*7/10, 'pay').setInteractive().setScale(0.2, 0.2);
-        pay.lvl2 = this.lvl2;
-        pay.win_i = this.win_i;
+    create(data) {
+        this.parent = data.par.scene;
+        var bg = this.add.image(innerWidth/3, innerHeight/10, 'bg').setScale(0.7, 0.7).setOrigin(0);
+        this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
+        var input = this.add.image(bg.x+bg.width*0.285, bg.y+bg.height*0.51, 'input').setScale(0.2, 0.2);
+        var textEntry = this.add.text(bg.x+bg.width*0.08, bg.y+bg.height*0.485, '', { font: '58px Courier', fill: '#ffff00' });
+        var help = this.add.image(bg.x+bg.width*0.6, bg.y+bg.height*0.51, 'help').setInteractive().setScale(0.08, 0.08);
+        var hint = this.add.image(bg.x+bg.width*0.87, bg.y+bg.height*0.435, 'hint').setScale(0, 0);
+        var pay =  this.add.image(bg.x+bg.width*0.35, bg.y+bg.height*0.615, 'pay').setInteractive().setScale(0.2, 0.2);
+        
         pay.on('pointerdown', function() {
-            console.log(textEntry.text);
-            let par = this.lvl2.scene.scene;
-            console.log(par);
+            let par = data.par.scene;
             par.cells[par.active_cell].img.active = false;
             par.cells[par.active_cell].img.setTint(0x696969);
             par.active_cell += 1;
-            par.cells[par.active_cell].img.active = true;
-            par.cells[par.active_cell].img.setTint(0xffffff);
-            this.lvl2.scene.remove("Window"+this.win_i);
+            if (par.cells.length === par.active_cell){
+                par.active_cell = 0;
+                if (par.month < 3){
+                    par.month_view.destroy();
+                    par.month += 1;
+                    par.month_view = par.add.sprite(1150, 75, 'month'+par.month).setScale(0.15, 0.15);
+                }
+                else{
+                    par.active_cell = null;
+                }
+            }
+            
+            if (par.active_cell != null){
+                par.cells[par.active_cell].img.active = true;
+                par.cells[par.active_cell].img.setTint(0xffffff);
+            }
+            par.scene.stop("Wind");
+            par.scene.resume();
         });
 
         help.on('pointerdown', function (event) {
@@ -64,6 +77,10 @@ export default class Window extends Phaser.Scene{
             }
 
         });
+    }
+
+    update() {
+        
     }
 
 }

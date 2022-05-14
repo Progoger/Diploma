@@ -4,7 +4,6 @@ import Level2 from "./scenes/level2.js";
 import Window from "./scenes/modalWindow.js";
 import levelChoice from "./scenes/levelChoice.js";
 import characterChoice from "./scenes/characterChoice.js";
-import Wind from './scenes/wind.js';
 import characterCustomization from "./scenes/characterCustomization.js";
 
 const config = {
@@ -14,10 +13,9 @@ const config = {
     height: innerHeight,
     scene: [
         mainMenu,
+        characterChoice,
         Level1,
         levelChoice,
-        Wind,
-        characterChoice,
         Level2,
         characterCustomization,
         Window

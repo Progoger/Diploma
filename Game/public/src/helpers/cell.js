@@ -8,7 +8,6 @@ export default class Cell {
                 if (this.active){
                     scene.createWindow();
                 }
-                console.log(this);
             });
             this.width = this.img.width*0.17;
             this.height = this.img.height*0.17;

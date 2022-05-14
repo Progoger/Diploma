@@ -14,7 +14,6 @@ export default class characterCard {
                         scene.characters[scene.activeChar].img.setScale(0.3, 0.3);
                     }
                     scene.activeChar = this.index;
-                    console.log(scene.activeChar);
                 }
             }, this);
             return this.img;
