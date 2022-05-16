@@ -35,7 +35,7 @@ export default class levelChoice extends Phaser.Scene {
         else{
             this.add.image(innerWidth/2, innerHeight/5*2, 'block').setScale(0.25, 0.25).setInteractive();
         }
-        if (stat.lvl1_completed) {
+        if (stat.lvl1_completed || true) {
             var level2 = this.add.image(innerWidth/2, innerHeight/5*3, 'level2').setScale(0.25, 0.25).setInteractive();
             
             level2.on('pointerdown', function (event) {

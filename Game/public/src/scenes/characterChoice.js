@@ -7,7 +7,7 @@ export default class characterChoice extends Phaser.Scene {
             key: 'characterChoice'
         });
         this.characters = [];
-        this.activeChar = null;
+        this.activeChar = 0;
         this.appearence = [
             '_brown_brown',
             '_blue_blonde',

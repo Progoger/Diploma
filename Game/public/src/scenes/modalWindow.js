@@ -1,58 +1,82 @@
+import { stat } from "../helpers/statistics.js";
+
 let clicked = false;
 
 export default class Window extends Phaser.Scene{
-    constructor(handle, parent, lvl2, win_i, x, y)
+    constructor()
     {
-        super(handle);
-        this.parent = parent;
-        this.x = x;
-        this.y = y;
-        this.lvl2 = lvl2;
-        this.win_i = win_i;
+        super({
+            key: 'Window'
+        });
+        this.tries = 0;
     }
 
     preload() {
-        this.load.image('bg', 'src/assets/windows/public_utilities/bg.png');
+        this.load.image('bg', `src/assets/windows/bgs/${stat.lvl2_active_cell}.png`);
         this.load.image('pay', 'src/assets/windows/pay.png');
+        this.load.image('cross', 'src/assets/common/cross.png');
         this.load.image('input', 'src/assets/windows/input.png');
         this.load.image('help', 'src/assets/windows/help.png');
         this.load.image('hint', 'src/assets/windows/hint.png');
     }
 
     create(data) {
-        this.parent = data.par.scene;
-        var bg = this.add.image(innerWidth/3, innerHeight/10, 'bg').setScale(0.7, 0.7).setOrigin(0);
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.6, 0.6).setOrigin(0);
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        var input = this.add.image(bg.x+bg.width*0.285, bg.y+bg.height*0.51, 'input').setScale(0.2, 0.2);
-        var textEntry = this.add.text(bg.x+bg.width*0.08, bg.y+bg.height*0.485, '', { font: '58px Courier', fill: '#ffff00' });
-        var help = this.add.image(bg.x+bg.width*0.6, bg.y+bg.height*0.51, 'help').setInteractive().setScale(0.08, 0.08);
-        var hint = this.add.image(bg.x+bg.width*0.87, bg.y+bg.height*0.435, 'hint').setScale(0, 0);
-        var pay =  this.add.image(bg.x+bg.width*0.35, bg.y+bg.height*0.615, 'pay').setInteractive().setScale(0.2, 0.2);
+        var pay = null;
+        var cross = this.add.image(bg.x+bg.width*0.6*0.97, bg.y*1.05, 'cross').setScale(0.09, 0.09).setInteractive();
+        if (data.type === 'range'){
+            var input = this.add.image(bg.x+bg.width*0.245, bg.y+bg.height*0.435, 'input').setScale(0.22, 0.22);
+            var textEntry = this.add.text(bg.x+bg.width*0.08, bg.y+bg.height*0.415, '', { font: '58px Courier', fill: '#ffff00' });
+            pay = this.add.image(bg.x+bg.width*0.3, bg.y+bg.height*0.525, 'pay').setInteractive().setScale(0.22, 0.22);
         
+            this.input.keyboard.on('keydown', function (event) {
+                if (event.keyCode === 8 && textEntry.text.length > 0)
+                {
+                    var tmp = textEntry.text.substr(0, textEntry.text.length - 1);
+                    textEntry.setText(tmp);
+                }
+                else if (event.keyCode >= 48 && event.keyCode < 58)
+                {
+                    textEntry.setText(textEntry.text+event.key);
+                }
+
+            });
+        }
+        else{
+            pay = this.add.image(bg.x+bg.width*0.3, bg.y+bg.height*0.475, 'pay').setInteractive().setScale(0.22, 0.22);
+            var notpay = this.add.image(bg.x+bg.width*0.3, bg.y+bg.height*0.525, 'pay').setInteractive().setScale(0.22, 0.22);
+        };
+        var help = this.add.image(bg.x+bg.width*0.51, bg.y+bg.height*0.435, 'help').setInteractive().setScale(0.08, 0.08);
+        var hint = this.add.image(bg.x+bg.width*0.72, bg.y+bg.height*0.385, 'hint').setScale(0, 0);        
+        
+        cross.on('pointerdown', function() {
+            let par = data.par.scene;
+            par.scene.stop("Window");
+            par.scene.resume();
+        }, this);
+
         pay.on('pointerdown', function() {
             let par = data.par.scene;
-            par.cells[par.active_cell].img.active = false;
-            par.cells[par.active_cell].img.setTint(0x696969);
-            par.active_cell += 1;
-            if (par.cells.length === par.active_cell){
-                par.active_cell = 0;
-                if (par.month < 3){
-                    par.month_view.destroy();
-                    par.month += 1;
-                    par.month_view = par.add.sprite(1150, 75, 'month'+par.month).setScale(0.15, 0.15);
+            if (data.type === 'range' && this.tries < 3){
+                var number = parseInt(textEntry.text);
+                var range = par.range_payments[data.description];
+                if (number >= range[0] && number <= range[1]){
+                    par.score += 1;
+                    par.players_money -= number;
+                    par.money.setText(par.players_money);
+                    par.score_txt.setText(par.score);
+                    this.tries = 0;
+                    this.move(par);
                 }
-                else{
-                    par.active_cell = null;
-                }
+                textEntry.setText('');
             }
-            
-            if (par.active_cell != null){
-                par.cells[par.active_cell].img.active = true;
-                par.cells[par.active_cell].img.setTint(0xffffff);
-            }
-            par.scene.stop("Wind");
-            par.scene.resume();
-        });
+            else{
+                this.tries = 0;
+                this.move(par);
+            };
+            this.tries += 1;
+        }, this);
 
         help.on('pointerdown', function (event) {
             if (clicked === false){
@@ -64,23 +88,25 @@ export default class Window extends Phaser.Scene{
                 clicked = false;
             }
         }, this);
-
-        this.input.keyboard.on('keydown', function (event) {
-            if (event.keyCode === 8 && textEntry.text.length > 0)
-            {
-                var tmp = textEntry.text.substr(0, textEntry.text.length - 1);
-                textEntry.setText(tmp);
-            }
-            else if (event.keyCode >= 48 && event.keyCode < 58)
-            {
-                textEntry.setText(textEntry.text+event.key);
-            }
-
-        });
     }
 
     update() {
         
+    }
+
+    move(par){
+        par.cells[par.active_cell].img.active = false;
+        par.cells[par.active_cell].img.setTint(0x696969);
+        par.active_cell++;
+        
+        if (par.active_cell != null){
+            par.cells[par.active_cell].img.active = true;
+            par.cells[par.active_cell].img.setTint(0xffffff);
+        }
+
+        par.opened = false;
+        par.scene.stop("Window");
+        par.scene.resume();
     }
 
 }

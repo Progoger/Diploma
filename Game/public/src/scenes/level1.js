@@ -78,7 +78,6 @@ export default class Level1 extends Phaser.Scene {
         this.add.sprite(innerWidth-75, innerHeight/2, 'progress').setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2+135, 'statistics').setScale(0.1, 0.1);
         this.add.sprite(175, 75, 'score').setScale(0.15, 0.15);
-        console.log(this);
         var textEntry = this.add.text(220, 40, this.score, { font: '75px Courier', fill: '#ffede4' });
 
         let index = getRandomInt(this.len);
@@ -139,7 +138,6 @@ export default class Level1 extends Phaser.Scene {
             gameObject.input.enabled = false;
     
             if (dropZone.texture.key === gameObject.texture.key.split('_')[0]){
-                console.log(this);
                 this.scene.score += 1;
                 textEntry.setText(this.scene.score);
             }
