@@ -2,7 +2,7 @@ import Cell from '../helpers/cell.js';
 import { stat_record, stat } from '../helpers/statistics.js';
 import { getRandomInt, sleep } from '../helpers/functions.js';'../helpers/functions.js';
 
-export default class Level2 extends Phaser.Scene {
+export default class Level3 extends Phaser.Scene {
     
     constructor() {
         super({
@@ -25,53 +25,22 @@ export default class Level2 extends Phaser.Scene {
             'range_larger pharmacy',
             'range_larger clothes',
             'question entertainment',
+            'range_larger kids',
             'startend cell'
         ];
         this.cells = [];
         this.month = 1;
 
-        this.unique_hints = {
-            'public_utilities': 3,
-            'internet': 3,
-            'products': null,
-            'transport': 2,
-            'household': 1,
-            'pharmacy': 3,
-            'clothes': 2
-        };
-
         this.range_payments = {
-            'diapason1': {
+            'diapason': {
                 'public_utilities': [3000, 3500],
                 'internet': [900, 1000]
             },
-            'larger1': {
+            'larger': {
                 'products': 5000,
                 'transport': 1500,
                 'household': 2500,
                 'pharmacy': 700,
-                'clothes': 2000
-            },
-            'diapason2': {
-                'public_utilities': [3000, 3500],
-                'internet': [900, 1000]
-            },
-            'larger2': {
-                'products': 5000,
-                'transport': 2100,
-                'household': 500,
-                'pharmacy': 700,
-                'clothes': 4000
-            },
-            'diapason3': {
-                'public_utilities': [4000, 4500],
-                'internet': [950, 1050]
-            },
-            'larger3': {
-                'products': 5000,
-                'transport': 1500,
-                'household': 500,
-                'pharmacy': 1500,
                 'clothes': 2000
             }
         };
@@ -104,6 +73,7 @@ export default class Level2 extends Phaser.Scene {
         this.load.image('money', 'src/assets/level2/money.png');
         this.load.image('debt', 'src/assets/level2/debt.png');
         this.load.image('saving', 'src/assets/level2/saving.png');
+        this.load.image('household', 'src/assets/level2/household.png');
         this.load.image('month1', 'src/assets/level2/month1.png');
         this.load.image('month2', 'src/assets/level2/month2.png');
         this.load.image('month3', 'src/assets/level2/month3.png');
@@ -217,7 +187,7 @@ export default class Level2 extends Phaser.Scene {
             this.scene.launch('RandomWindow', {par:this.scene, type: type, description: description});
         }
         else{
-            var range = this.range_payments[type.split('_')[1]+this.month][description];
+            var range = this.range_payments[type.split('_')[1]][description];
             let number = 0;
             if (typeof range == 'number'){
                 number = range;

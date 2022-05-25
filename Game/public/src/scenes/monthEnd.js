@@ -19,6 +19,7 @@ export default class MonthEnd extends Phaser.Scene{
     }
 
     create(data) {
+        this.borrow_payed = 0;
         var bg = this.add.image(innerWidth*0.28, innerHeight/20, `bg${data.par.scene.month}`).setScale(0.33, 0.33).setOrigin(0);
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         this.add.image(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.53, 'input').setScale(0.22, 0.22);
@@ -31,6 +32,7 @@ export default class MonthEnd extends Phaser.Scene{
         
         cont.on('pointerdown', function() {
             let par = data.par.scene;
+            par.players_borrow = 0;
             par.cells[par.active_cell].img.active = false;
             par.cells[par.active_cell].img.setTint(0x696969);
             par.active_cell = 0;
@@ -46,14 +48,37 @@ export default class MonthEnd extends Phaser.Scene{
 
         pay.on('pointerdown', function() {
             let par = data.par.scene;
-            if (par.players_saving >= textEntry.text && par.players_debt >= textEntry.text){
-                par.players_saving -= textEntry.text;
-                par.debt -= textEntry.text;
+            let number = parseInt(textEntry.text);
+            if (par.players_saving >= number && par.players_debt >= number && number != 0){
+                par.players_saving -= number;
+                par.players_debt -= number;
                 par.saving.setText(par.players_saving);
                 par.debt.setText(par.players_debt);
                 this.saving.setText(par.players_saving);
                 this.debt.setText(par.players_debt);
                 textEntry.setText('');
+                if (par.players_borrow != 0 && par.players_borrow > number){
+                    let tmp = this.borrow_payed;
+                    this.borrow_payed += number;
+                    console.log();
+                    console.log();
+                    if (tmp === 0){
+                        par.score += 0.5;
+                    }
+                    par.score += (Math.floor(this.borrow_payed/500))*0.5 - (Math.floor(tmp/500))*0.5; 
+                    par.players_borrow -= number;
+                }
+                else if(par.players_borrow != 0){
+                    let tmp = this.borrow_payed;
+                    this.borrow_payed = this.borrow_payed + par.players_borrow;
+                    if (tmp === 0){
+                        par.score += 0.5;
+                    }
+                    par.score += (Math.floor(this.borrow_payed/500))*0.5 - (Math.floor(tmp/500))*0.5;
+                    par.players_borrow = 0;
+                };
+                par.score_txt.setText(par.score);
+                this.score.setText(par.score);
             }
         }, this);
 

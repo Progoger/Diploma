@@ -22,25 +22,117 @@ export default class LevelFinish extends Phaser.Scene{
         var bg = this.add.image(innerWidth*0.28, innerHeight/20, 'bg').setScale(0.33, 0.33).setOrigin(0);
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         this.add.image(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.51, 'input').setScale(0.22, 0.22);
-        this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.63, 'pay').setScale(0.27, 0.27);
-        this.add.image(bg.x+bg.width*0.33*0.425, bg.y+bg.height*0.33*0.755, 'bonus').setScale(0.22, 0.22);
+        var textEntry = this.add.text(bg.x+bg.width*0.33*0.22, bg.y+bg.height*0.33*0.48, '', { font: '58px Courier', fill: '#ffff00' });
+        var pay = this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.63, 'pay').setScale(0.27, 0.27).setInteractive();
+        var bonus = this.add.image(bg.x+bg.width*0.33*0.425, bg.y+bg.height*0.33*0.755, 'bonus').setScale(0.22, 0.22).setInteractive();
         var cont =  this.add.image(bg.x+bg.width*0.5*0.33, bg.y+bg.height*0.33*0.88, 'finish').setInteractive().setScale(0.27, 0.27);
         this.score = this.add.text(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.215, data.par.scene.score, { font: '50px Courier', fill: '#000000' });
         this.saving = this.add.text(bg.x+bg.width*0.33*0.6, bg.y+bg.height*0.33*0.295, data.par.scene.players_saving, { font: '50px Courier', fill: '#000000' });
         this.debt = this.add.text(bg.x+bg.width*0.33*0.4, bg.y+bg.height*0.33*0.365, data.par.scene.players_debt, { font: '50px Courier', fill: '#000000' });
 
+        this.par = data.par.scene;
+
+        if (this.par.players_debt != 0 || this.par.players_saving === 0){
+            bonus.setTint(0x696969);
+        };
+
         cont.on('pointerdown', function() {
-            var par = data.par.scene;
-            console.log(par.month);
-            console.log(par.active_cell);
-            par.cells[par.active_cell].img.active = false;
-            par.cells[par.active_cell].img.setTint(0x696969);
-            par.active_cell = null;
-            par.complete.setTint(0xffffff);
-            par.opened = false;
-            par.scene.stop("LevelFinish");
-            par.scene.resume();
+            this.par.players_borrow = 0;
+            if (this.par.players_saving === 0 &&  0 < this.par.players_debt){
+                this.par.score -= (this.par.players_debt/500)*0.5 + 0.5;
+                this.par.saving.setText(this.par.players_saving);
+                this.par.debt.setText(this.par.players_debt);
+                this.saving.setText(this.par.players_saving);
+                this.debt.setText(this.par.players_debt);
+            }
+            else if (this.par.players_saving < this.par.players_debt){
+                this.par.players_debt -= this.par.players_saving;
+                this.par.players_saving = 0;
+                this.par.score -= (this.par.players_debt/500) + 1;
+                this.par.saving.setText(this.par.players_saving);
+                this.par.debt.setText(this.par.players_debt);
+                this.saving.setText(this.par.players_saving);
+                this.debt.setText(this.par.players_debt);
+            }
+            else if (this.par.players_saving > this.par.players_debt){
+                this.par.players_saving -= this.par.players_debt;
+                this.par.players_debt = 0;
+                if (this.par.players_saving < 1000){
+                    this.par.score += 0.5;
+                }
+                else{
+                    this.par.score += this.par.players_saving/1000;
+                };
+                this.par.saving.setText(this.par.players_saving);
+                this.par.debt.setText(this.par.players_debt);
+                this.saving.setText(this.par.players_saving);
+                this.debt.setText(this.par.players_debt);
+            };
+            this.par.cells[this.par.active_cell].img.active = false;
+            this.par.cells[this.par.active_cell].img.setTint(0x696969);
+            this.par.active_cell = null;
+            this.par.opened = false;
+            this.par.scene.stop("LevelFinish");
+            this.par.scene.launch("Level2Finish", {par: this.par});
+            
         }, this);
+
+        bonus.on('pointerdown', function() {
+            if (this.par.players_debt === 0 && this.par.players_saving > 0){
+                this.par.scene.launch('Bonus', {par: this.par});
+                this.par.scene.pause("LevelFinish");
+            };
+        }, this);
+
+        pay.on('pointerdown', function() {
+            let par = data.par.scene;
+            let number = parseInt(textEntry.text);
+            if (par.players_saving >= number && par.players_debt >= number && number != 0){
+                par.players_saving -= number;
+                par.players_debt -= number;
+                par.saving.setText(par.players_saving);
+                par.debt.setText(par.players_debt);
+                this.saving.setText(par.players_saving);
+                this.debt.setText(par.players_debt);
+                textEntry.setText('');
+                if (this.par.players_debt === 0 && this.par.players_saving > 0){
+                    bonus.setTint(0xffffff);
+                };
+
+                if (par.players_borrow != 0 && par.players_borrow > number){
+                    let tmp = this.borrow_payed;
+                    this.borrow_payed += number;
+                    if (tmp === 0){
+                        par.score += 0.5;
+                    }
+                    par.score += (Math.floor(this.borrow_payed/500))*0.5 - (Math.floor(tmp/500))*0.5; 
+                    par.players_borrow -= number;
+                }
+                else if(par.players_borrow != 0){
+                    let tmp = this.borrow_payed;
+                    this.borrow_payed = this.borrow_payed + par.players_borrow;
+                    if (tmp === 0){
+                        par.score += 0.5;
+                    }
+                    par.score += (Math.floor(this.borrow_payed/500))*0.5 - (Math.floor(tmp/500))*0.5;
+                    par.players_borrow = 0;
+                };
+                par.score_txt.setText(par.score);
+                this.score.setText(par.score);
+            }
+        }, this);
+
+        this.input.keyboard.on('keydown', function (event) {
+            if (event.keyCode === 8 && textEntry.text.length > 0)
+            {
+                var tmp = textEntry.text.substr(0, textEntry.text.length - 1);
+                textEntry.setText(tmp);
+            }
+            else if (event.keyCode >= 48 && event.keyCode < 58)
+            {
+                textEntry.setText(textEntry.text+event.key);
+            }
+        });
     }
 
     update() {

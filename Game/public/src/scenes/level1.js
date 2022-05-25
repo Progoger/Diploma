@@ -47,6 +47,7 @@ export default class Level1 extends Phaser.Scene {
 
     create() {
         this.score = 0;
+        this.tmp = 0;
 
         this.cards = new Array(
             'income_0',
@@ -73,7 +74,6 @@ export default class Level1 extends Phaser.Scene {
         
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
-        var complete = this.add.sprite(innerWidth-75, innerHeight-75, 'complete').setInteractive().setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2-135, 'help').setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2, 'progress').setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2+135, 'statistics').setScale(0.1, 0.1);
@@ -141,8 +141,11 @@ export default class Level1 extends Phaser.Scene {
                 this.scene.score += 1;
                 textEntry.setText(this.scene.score);
             }
+            this.scene.tmp += 1;
             dropZone.clearTint();
-    
+            if (this.scene.tmp === 20){
+                this.scene.scene.launch('Level1Finish', {par: this.scene});
+            }
         });
     
         this.input.on('dragend', function (pointer, gameObject, dropped) {
@@ -154,13 +157,7 @@ export default class Level1 extends Phaser.Scene {
             }
         });
 
-        complete.on('pointerdown', function(event) {
-            if (stat.lvl1_completed == false && this.score > 14){
-                stat.lvl1_completed = true;
-            }
-            stat.lvl1_score = this.score;
-            this.scene.start("mainMenu");
-        }, this)
+        
     }
 
     update() {

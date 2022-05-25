@@ -41,12 +41,19 @@ export default class Borrow extends Phaser.Scene{
 
         borrow.on('pointerdown', function() {
             let par = data.par.scene;
-            par.players_debt += parseInt(textEntry.text);
-            par.players_money += parseInt(textEntry.text);
-            par.money.setText(par.players_money);
-            par.debt.setText(par.players_debt);
-            par.scene.stop("Borrow");
-            par.scene.resume();
+            let number = parseInt(textEntry.text);
+            if (par.players_borrow + number <= 3000 && number > 0)
+            {
+                par.score -= (number/500)*0.5 + 0.5; 
+                par.players_borrow += number;
+                par.players_debt += number;
+                par.players_money += number;
+                par.money.setText(par.players_money);
+                par.debt.setText(par.players_debt);
+                par.score_txt.setText(par.score);
+                par.scene.stop("Borrow");
+                par.scene.resume();
+            }
         }, this);
 
         cross.on('pointerdown', function() {

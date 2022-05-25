@@ -6,11 +6,16 @@ import Description from "./scenes/description.js";
 import MonthEnd from "./scenes/monthEnd.js";
 import levelChoice from "./scenes/levelChoice.js";
 import Borrow from "./scenes/borrow.js";
+import Bonus from "./scenes/bonus.js";
 import Save from "./scenes/save.js";
 import LevelFinish from "./scenes/levelFinish.js";
+import Level1Finish from "./scenes/level1Finish.js";
+import Level2Finish from "./scenes/level2Finish.js";
 import characterChoice from "./scenes/characterChoice.js";
 import characterCustomization from "./scenes/characterCustomization.js";
 import RandomWindow from "./scenes/randomWindow.js";
+import BonusWindow from "./scenes/bonusWindow.js";
+import Rule from "./scenes/rule.js";
 
 const config = {
     type: Phaser.WEBGL,
@@ -22,6 +27,7 @@ const config = {
         mainMenu,
         characterChoice,
         Level1,
+        Level1Finish,
         levelChoice,
         Level2,
         Window,
@@ -31,6 +37,10 @@ const config = {
         RandomWindow,
         Borrow,
         Save,
+        Bonus,
+        BonusWindow,
+        Rule,
+        Level2Finish,
         characterCustomization
         
     ]

@@ -29,8 +29,8 @@ export default class levelChoice extends Phaser.Scene {
             var level1 = this.add.image(innerWidth/2, innerHeight/5*2, 'level1').setScale(0.25, 0.25).setInteractive();
             
             level1.on('pointerdown', function (event) {
-                this.scene.start("Level1");
-              }, this);
+                this.scene.launch("Rule", {description: '2', sc:'Level1', par: this.scene});
+            }, this);
         }
         else{
             this.add.image(innerWidth/2, innerHeight/5*2, 'block').setScale(0.25, 0.25).setInteractive();
@@ -39,7 +39,7 @@ export default class levelChoice extends Phaser.Scene {
             var level2 = this.add.image(innerWidth/2, innerHeight/5*3, 'level2').setScale(0.25, 0.25).setInteractive();
             
             level2.on('pointerdown', function (event) {
-                this.scene.start("Level2");
+                this.scene.launch("Rule", {description: '5', sc:'Level2', par: this.scene});
             }, this);
         }
         else{
@@ -60,7 +60,7 @@ export default class levelChoice extends Phaser.Scene {
         }, this);
 
         character.on('pointerdown', function (event) {
-            this.scene.start("characterChoice");
+            this.scene.launch("Rule", {sc:'characterChoice', par: this.scene});
         }, this);
     }
 

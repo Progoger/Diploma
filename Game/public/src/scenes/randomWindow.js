@@ -47,7 +47,13 @@ export default class RandomWindow extends Phaser.Scene{
                 if (par.players_money >= par.random_windows[cell[0]][cell[1]])
                 {
                     par.players_money -= par.random_windows[cell[0]][cell[1]];
-                    par.score += 1;
+                    if (cell[0] === 'expense')
+                    {
+                        par.score += 2;
+                    }
+                    else{
+                        par.score += 1;
+                    };
                     par.money.setText(par.players_money);
                     par.score_txt.setText(par.score);
                     
@@ -69,7 +75,13 @@ export default class RandomWindow extends Phaser.Scene{
                 if (par.players_saving >= par.random_windows[cell[0]][cell[1]])
                 {
                     par.players_saving -= par.random_windows[cell[0]][cell[1]];
-                    par.score += 1;
+                    if (cell[0] === 'expense')
+                    {
+                        par.score += 2;
+                    }
+                    else{
+                        par.score += 1;
+                    };
                     par.saving.setText(par.players_saving);
                     par.score_txt.setText(par.score);
                     
