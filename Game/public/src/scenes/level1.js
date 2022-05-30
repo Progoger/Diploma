@@ -46,6 +46,11 @@ export default class Level1 extends Phaser.Scene {
     }
 
     create() {
+        stat_record.enterLevel({
+            'answer_number': 0
+        });
+        
+
         this.score = 0;
         this.tmp = 0;
 
@@ -72,7 +77,7 @@ export default class Level1 extends Phaser.Scene {
             'expense_9'
         )
         
-        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
+        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
         this.add.sprite(innerWidth-75, innerHeight/2-135, 'help').setScale(0.1, 0.1);
         this.add.sprite(innerWidth-75, innerHeight/2, 'progress').setScale(0.1, 0.1);
@@ -88,6 +93,11 @@ export default class Level1 extends Phaser.Scene {
         card = new Card(this, this.cards[index].split('_')[0]);
         card.render(175+252*1.15, innerHeight/2, this.cards[index]);
         this.cards.splice(index, 1);
+
+        bg.on('pointerdown', function() {
+            stat_record.sendMissClick();
+            console.log(stat_record);
+        }, this);
 
         this.dealCards = (x, y, interval, a, n) => {
             for (let i = a; i < n; i++) {
@@ -140,7 +150,23 @@ export default class Level1 extends Phaser.Scene {
             if (dropZone.texture.key === gameObject.texture.key.split('_')[0]){
                 this.scene.score += 1;
                 textEntry.setText(this.scene.score);
+
+                stat_record.sendAnswer({
+                    'correct': true
+                });
+                stat_record.enterLevel({
+                    'answer_number': 0
+                });
             }
+            else {
+                stat_record.sendAnswer({
+                    'correct': false
+                });
+                stat_record.enterLevel({
+                    'answer_number': 0
+                });                
+            };
+            console.log(stat_record);
             this.scene.tmp += 1;
             dropZone.clearTint();
             if (this.scene.tmp === 20){

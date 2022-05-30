@@ -117,16 +117,20 @@ export default class Level2 extends Phaser.Scene {
     }
 
     create() {
+        stat_record.enterLevel({
+            'answer_number': 1
+        });
+
         this.win_i = 0;
         this.active_cell = 0;
         this.players_money = 0;
-        this.players_debt = 58000;
+        this.players_debt = 0;
         this.players_saving = 0;
         this.players_borrow = 0;
         this.month = 1;
         this.score = 0;
         
-        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
+        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
         this.add.sprite(innerWidth-75, innerHeight/2-130, 'help').setScale(0.09, 0.09);
         this.add.sprite(innerWidth-75, innerHeight/2-20, 'progress').setScale(0.09, 0.09);
@@ -183,6 +187,11 @@ export default class Level2 extends Phaser.Scene {
         
         this.scene.launch('Description', {par:this.scene});
         this.scene.pause();
+
+        bg.on('pointerdown', function() {
+            stat_record.sendMissClick();
+            console.log(stat_record);
+        }, this);
     }
 
     update() {

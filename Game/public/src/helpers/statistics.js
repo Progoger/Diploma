@@ -1,5 +1,7 @@
-var stat_record = new StatRecord();
-
+var stat_record = new StatRecord({
+    "levels_names": ["1 уровень", "2 уровень", "3 уровень"]
+});
+console.log(stat_record);
 class Statistics {
     constructor() {
         this.character_chosed = false;
@@ -12,11 +14,11 @@ class Statistics {
         this.gender = 'girl';
         this.lvl2_active_cell = null;
     }
-}
+};
 
 var stat = new Statistics();
 
 export {
     stat_record,
     stat
-}
+};

@@ -5,6 +5,7 @@ export default class mainMenu extends Phaser.Scene {
         super({
             key: 'mainMenu'
         });
+        stat_record.gameStart();
     }
 
     preload() {
@@ -16,7 +17,7 @@ export default class mainMenu extends Phaser.Scene {
     }
 
     create() {
-        stat_record.gameStart();
+        
         let self = this;
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
         var play = this.add.image(innerWidth/2, innerHeight/5, 'play').setScale(0.25, 0.25).setInteractive();

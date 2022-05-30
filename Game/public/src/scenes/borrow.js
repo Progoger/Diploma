@@ -1,4 +1,4 @@
-import { stat } from "../helpers/statistics.js";
+import { stat_record, stat } from '../helpers/statistics.js';
 
 let clicked = false;
 
@@ -19,7 +19,7 @@ export default class Borrow extends Phaser.Scene{
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.33, 0.33).setOrigin(0);
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.33, 0.33).setOrigin(0).setInteractive();
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         var input = this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.72, 'input').setScale(0.27, 0.27);
         var textEntry = this.add.text(bg.x+bg.width*0.33*0.2, bg.y+bg.height*0.33*0.68, '', { font: '58px Courier', fill: '#ffff00' });

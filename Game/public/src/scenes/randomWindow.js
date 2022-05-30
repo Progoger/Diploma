@@ -1,4 +1,4 @@
-import { stat } from "../helpers/statistics.js";
+import { stat_record, stat } from '../helpers/statistics.js';
 
 let clicked = false;
 
@@ -29,7 +29,7 @@ export default class RandomWindow extends Phaser.Scene{
     create(data) {
         let cell = data.description.split(' ');
         data.par.scene.paused = false;
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.34, 0.34).setOrigin(0);
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.34, 0.34).setOrigin(0).setInteractive();
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         if (cell[0] === 'expense'){
             this.add.image(bg.x+bg.width*0.34*0.08, bg.y+bg.height*0.34*0.3, 'text').setScale(0.33, 0.33).setOrigin(0);

@@ -1,4 +1,4 @@
-import { stat } from "../helpers/statistics.js";
+import { stat_record, stat } from '../helpers/statistics.js';
 
 let clicked = false;
 
@@ -23,7 +23,7 @@ export default class Window extends Phaser.Scene{
 
     create(data) {
         console.log(data);
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.6, 0.6).setOrigin(0);
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.6, 0.6).setOrigin(0).setInteractive();
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         var pay = null;
         var cross = this.add.image(bg.x+bg.width*0.6*0.97, bg.y*1.05, 'cross').setScale(0.09, 0.09).setInteractive();
@@ -71,11 +71,21 @@ export default class Window extends Phaser.Scene{
                 var number = parseInt(textEntry.text);
                 var range = par.range_payments[data.type.split('_')[1]+par.month][data.description];
                 if (typeof range !== 'number' && number >= range[0] && number <= range[1] && number <= par.players_money){
-                    par.score += 1;
+                    if (this.tries < 3){
+                        par.score += 1;
+                    };
                     par.players_money -= number;
                     par.money.setText(par.players_money);
                     par.score_txt.setText(par.score);
                     this.tries = 0;
+
+                    stat_record.sendAnswer({
+                        'correct': true
+                    });
+                    stat_record.enterLevel({
+                        'answer_number': 1
+                    });
+
                     this.move(par);
                 }
                 else if(number >= range){
@@ -86,11 +96,27 @@ export default class Window extends Phaser.Scene{
                     par.money.setText(par.players_money);
                     par.score_txt.setText(par.score);
                     this.tries = 0;
+                    
+                    stat_record.sendAnswer({
+                        'correct': true
+                    });
+                    stat_record.enterLevel({
+                        'answer_number': 1
+                    });
+                    
                     this.move(par);
                 };
                 textEntry.setText('');
             };
             this.tries += 1;
+
+            stat_record.sendAnswer({
+                'correct': false
+            });
+            stat_record.enterLevel({
+                'answer_number': 1
+            });
+
             if (this.tries === 3){
                 help.setTint(0xffffff);
             };
