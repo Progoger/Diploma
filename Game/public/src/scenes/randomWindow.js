@@ -13,7 +13,13 @@ export default class RandomWindow extends Phaser.Scene{
     preload() {
         var active = stat.lvl2_active_cell.split(' ');
         this.load.image('bg', `src/assets/level2/${active[0]}/bg.png`);
-        this.load.image('text', `src/assets/level2/${active[0]}/${active[1]}.png`);
+        if (active[0] === 'entertainment'){
+            this.load.image('text', `src/assets/level2/${stat.active_level}/${active[0]}/${active[1]}.png`);
+        }
+        else{
+            this.load.image('text', `src/assets/level2/${active[0]}/${active[1]}.png`);
+        }
+
         if (active[0] !== 'sidejob'){
             this.load.image('pay', `src/assets/level2/${active[0]}/pay.png`);
             this.load.image('np', `src/assets/level2/${active[0]}/dontpay.png`);

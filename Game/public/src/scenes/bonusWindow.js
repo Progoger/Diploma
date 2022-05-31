@@ -10,13 +10,24 @@ export default class BonusWindow extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('skiing', 'src/assets/level2/bonusWindow/skiing.png');
-        this.load.image('karting', 'src/assets/level2/bonusWindow/karting.png');
-        this.load.image('voucher', 'src/assets/level2/bonusWindow/voucher.png');
-        this.load.image('golf', 'src/assets/level2/bonusWindow/golf.png');
-        this.load.image('ship', 'src/assets/level2/bonusWindow/ship.png');
+        if (stat.active_level === 'level2')
+        {
+            this.load.image('skiing', 'src/assets/level2/bonusWindow/level2/skiing.png');
+            this.load.image('karting', 'src/assets/level2/bonusWindow/level2/karting.png');
+            this.load.image('voucher', 'src/assets/level2/bonusWindow/level2/voucher.png');
+            this.load.image('golf', 'src/assets/level2/bonusWindow/level2/golf.png');
+            this.load.image('lasertag', 'src/assets/level2/bonusWindow/level2/lasertag.png');
+            this.load.image('ship', 'src/assets/level2/bonusWindow/level2/ship.png');
+        }
+        else{
+            this.load.image('bike', 'src/assets/level2/bonusWindow/level3/bike.png');
+            this.load.image('cottage', 'src/assets/level2/bonusWindow/level3/cottage.png');
+            this.load.image('oceanarium', 'src/assets/level2/bonusWindow/level3/oceanarium.png');
+            this.load.image('planetarium', 'src/assets/level2/bonusWindow/level3/planetarium.png');
+            this.load.image('restaurant', 'src/assets/level2/bonusWindow/level3/restaurant.png');
+            this.load.image('ship', 'src/assets/level2/bonusWindow/level3/ship.png');
+        };
         this.load.image('input', 'src/assets/level2/bonusWindow/input.png');
-        this.load.image('lasertag', 'src/assets/level2/bonusWindow/lasertag.png');
         this.load.image('anything', 'src/assets/level2/bonusWindow/anything.png');
         this.load.image('saving', 'src/assets/level2/bonusWindow/saving.png');
         this.load.image('pay', 'src/assets/level2/bonusWindow/pay.png');
@@ -149,7 +160,12 @@ export default class BonusWindow extends Phaser.Scene{
             par.players_saving = 0;
             par.score_txt.setText(par.score);
             par.saving.setText(par.players_saving);
-            par.scene.launch("Level2Finish", {par: par});
+            if (stat.active_level === 'level2'){
+                par.scene.launch("Level2Finish", {par: par});
+            }
+            else{
+                par.scene.launch("Level3Finish", {par: par});
+            };
             par.scene.stop("BonusWindow");
             par.scene.stop('Bonus');
             par.scene.stop('LevelFinish');

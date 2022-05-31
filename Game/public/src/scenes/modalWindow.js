@@ -12,7 +12,7 @@ export default class Window extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg', `src/assets/windows/bgs/${stat.lvl2_active_cell}.png`);
+        this.load.image('bg', `src/assets/windows/bgs/${stat.active_level}/${stat.lvl2_active_cell}.png`);
         this.load.image('pay', 'src/assets/windows/pay.png');
         this.load.image('cross', 'src/assets/common/cross.png');
         this.load.image('input', 'src/assets/windows/input.png');

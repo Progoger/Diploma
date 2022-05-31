@@ -46,6 +46,7 @@ export default class Level1 extends Phaser.Scene {
     }
 
     create() {
+        stat.active_level = 'level1';
         stat_record.enterLevel({
             'answer_number': 0
         });

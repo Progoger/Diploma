@@ -13,6 +13,7 @@ class Statistics {
         this.lvl3_score = 0;
         this.gender = 'girl';
         this.lvl2_active_cell = null;
+        this.active_level = null;
     }
 };
 

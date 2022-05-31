@@ -6,7 +6,7 @@ export default class Level3 extends Phaser.Scene {
     
     constructor() {
         super({
-            key: 'Level2'
+            key: 'Level3'
         });
         this.win_i = 0;
         this.active_cell = 0;
@@ -31,24 +31,59 @@ export default class Level3 extends Phaser.Scene {
         this.cells = [];
         this.month = 1;
 
+        this.unique_hints = {
+            'public_utilities': 3,
+            'internet': 3,
+            'products': null,
+            'transport': 2,
+            'household': 1,
+            'pharmacy': 3,
+            'clothes': 2
+        };
+
         this.range_payments = {
-            'diapason': {
-                'public_utilities': [3000, 3500],
-                'internet': [900, 1000]
+            'diapason1': {
+                'public_utilities': [5500, 6000],
+                'internet': [1400, 1500]
             },
-            'larger': {
-                'products': 5000,
-                'transport': 1500,
-                'household': 2500,
-                'pharmacy': 700,
-                'clothes': 2000
+            'larger1': {
+                'products': 12000,
+                'transport': 3000,
+                'household': 3500,
+                'pharmacy': 2100,
+                'clothes': 6000,
+                'kids': 2650
+            },
+            'diapason2': {
+                'public_utilities': [5500, 6000],
+                'internet': [1400, 1500]
+            },
+            'larger2': {
+                'products': 12000,
+                'transport': 4000,
+                'household': 600,
+                'pharmacy': 2100,
+                'clothes': 6000,
+                'kids': 2890
+            },
+            'diapason3': {
+                'public_utilities': [5500, 6000],
+                'internet': [1400, 1500]
+            },
+            'larger3': {
+                'products': 12000,
+                'transport': 3000,
+                'household': 600,
+                'pharmacy': 2100,
+                'clothes': 6000,
+                'kids': 3000
             }
         };
 
         this.random_windows = {
             'expense': [1000, 1000, 700, 300, 2000, 600, 700, 500, 1000, 1000],
             'sidejob': [2000, 2000, 1000, 2000, 900, 1000, 1000],
-            'entertainment': [600, 700, 600, 300, 300, 900, 800, 800, 700, 500]
+            'entertainment': [1500, 2100, 1800, 1200, 900, 1500, 1500, 1500, 700, 1000]
         };
 
         this.score = 0;
@@ -72,8 +107,8 @@ export default class Level3 extends Phaser.Scene {
         this.load.image('transport', 'src/assets/level2/transport.png');
         this.load.image('money', 'src/assets/level2/money.png');
         this.load.image('debt', 'src/assets/level2/debt.png');
+        this.load.image('kids', 'src/assets/level2/kids.png');
         this.load.image('saving', 'src/assets/level2/saving.png');
-        this.load.image('household', 'src/assets/level2/household.png');
         this.load.image('month1', 'src/assets/level2/month1.png');
         this.load.image('month2', 'src/assets/level2/month2.png');
         this.load.image('month3', 'src/assets/level2/month3.png');
@@ -87,16 +122,21 @@ export default class Level3 extends Phaser.Scene {
     }
 
     create() {
+        stat.active_level = 'level3';
+        stat_record.enterLevel({
+            'answer_number': 2
+        });
+
         this.win_i = 0;
         this.active_cell = 0;
         this.players_money = 0;
-        this.players_debt = 58000;
+        this.players_debt = 0;
         this.players_saving = 0;
         this.players_borrow = 0;
         this.month = 1;
         this.score = 0;
         
-        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
+        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
         this.add.sprite(innerWidth-75, innerHeight/2-130, 'help').setScale(0.09, 0.09);
         this.add.sprite(innerWidth-75, innerHeight/2-20, 'progress').setScale(0.09, 0.09);
@@ -114,7 +154,7 @@ export default class Level3 extends Phaser.Scene {
 
         let cell = new Cell(this);
         this.cells.push(cell);
-        cell.render(innerWidth/12, innerHeight/3.5, this.cells_description[0]);
+        cell.render(innerWidth/10, innerHeight/3.5, this.cells_description[0]);
         cell.img.description = 'start';
         for (let i = 0; i < 4; i++){
             let tmp = new Cell(this);
@@ -134,12 +174,15 @@ export default class Level3 extends Phaser.Scene {
             tmp.render(cell.x-cell.width, cell.y, this.cells_description[i+8]);
             cell = tmp;
         }
-        cell.img.description = 'end';
+        let tmp = new Cell(this);
+        this.cells.push(tmp);
+        tmp.render(cell.x, cell.y - cell.height, this.cells_description[this.cells_description.length-1]);
+        tmp.img.description = 'end';
         this.cells[this.active_cell].img.setTint(0xffffff);
         this.cells[this.active_cell].img.active = true;
         stat.lvl2_active_cell = this.cells_description[this.active_cell];
-        var borrow = this.add.sprite(innerWidth/12, innerHeight*0.58, 'bomb').setScale(0.17, 0.17).setInteractive();
-        var save = this.add.sprite(innerWidth/12+cell.width, innerHeight*0.58, 'moneybox').setScale(0.17, 0.17).setInteractive();
+        var borrow = this.add.sprite(innerWidth/2.2-cell.width, innerHeight*0.58, 'bomb').setScale(0.17, 0.17).setInteractive();
+        var save = this.add.sprite(innerWidth/2.2, innerHeight*0.58, 'moneybox').setScale(0.17, 0.17).setInteractive();
         
         borrow.on('pointerdown', function() {
             this.scene.launch('Borrow', {par:this.scene});
@@ -153,6 +196,10 @@ export default class Level3 extends Phaser.Scene {
         
         this.scene.launch('Description', {par:this.scene});
         this.scene.pause();
+
+        bg.on('pointerdown', function() {
+            stat_record.sendMissClick();
+        }, this);
     }
 
     update() {
@@ -187,7 +234,7 @@ export default class Level3 extends Phaser.Scene {
             this.scene.launch('RandomWindow', {par:this.scene, type: type, description: description});
         }
         else{
-            var range = this.range_payments[type.split('_')[1]][description];
+            var range = this.range_payments[type.split('_')[1]+this.month][description];
             let number = 0;
             if (typeof range == 'number'){
                 number = range;
@@ -205,7 +252,7 @@ export default class Level3 extends Phaser.Scene {
                     this.saving.setText(this.players_saving);
                     this.debt.setText(this.players_debt);
                     this.score_txt.setText(this.score);
-                    this.scene.launch("Level2Finish", {par: this.scene.scene});
+                    this.scene.launch("Level3Finish", {par: this.scene.scene});
                     
                 }, this);
             }

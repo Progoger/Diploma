@@ -45,8 +45,17 @@ export default class levelChoice extends Phaser.Scene {
         else{
             this.add.image(innerWidth/2, innerHeight/5*3, 'block').setScale(0.25, 0.25).setInteractive();
         }
-        
-        var level3 = this.add.image(innerWidth/2, innerHeight/5*4, 'block').setScale(0.25, 0.25).setInteractive();
+
+        if (stat.lvl2_completed || true) {
+            var level3 = this.add.image(innerWidth/2, innerHeight/5*4, 'level3').setScale(0.25, 0.25).setInteractive();
+            
+            level3.on('pointerdown', function (event) {
+                this.scene.launch("Rule", {description: '5', sc:'Level3', par: this.scene});
+            }, this);
+        }
+        else{
+            this.add.image(innerWidth/2, innerHeight/5*4, 'block').setScale(0.25, 0.25).setInteractive();
+        }
 
         help.on('pointerdown', function (event) {
             if (clicked === false){

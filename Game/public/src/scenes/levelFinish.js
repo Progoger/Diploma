@@ -73,8 +73,13 @@ export default class LevelFinish extends Phaser.Scene{
             this.par.active_cell = null;
             this.par.opened = false;
             this.par.scene.stop("LevelFinish");
-            this.par.scene.launch("Level2Finish", {par: this.par});
-            
+            console.log(stat.active_level);
+            if (stat.active_level === 'level2'){
+                this.par.scene.launch("Level2Finish", {par: this.par});
+            }
+            else{
+                this.par.scene.launch("Level3Finish", {par: this.par});
+            };
         }, this);
 
         bonus.on('pointerdown', function() {

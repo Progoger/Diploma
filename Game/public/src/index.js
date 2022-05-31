@@ -1,6 +1,7 @@
 import mainMenu from "./scenes/mainMenu.js";
 import Level1 from "./scenes/level1.js";
 import Level2 from "./scenes/level2.js";
+import Level3 from "./scenes/level3.js";
 import Window from "./scenes/modalWindow.js";
 import Description from "./scenes/description.js";
 import MonthEnd from "./scenes/monthEnd.js";
@@ -11,6 +12,7 @@ import Save from "./scenes/save.js";
 import LevelFinish from "./scenes/levelFinish.js";
 import Level1Finish from "./scenes/level1Finish.js";
 import Level2Finish from "./scenes/level2Finish.js";
+import Level3Finish from "./scenes/level3Finish.js";
 import characterChoice from "./scenes/characterChoice.js";
 import characterCustomization from "./scenes/characterCustomization.js";
 import RandomWindow from "./scenes/randomWindow.js";
@@ -30,6 +32,7 @@ const config = {
         Level1Finish,
         levelChoice,
         Level2,
+        Level3,
         Window,
         Description,
         MonthEnd,
@@ -41,6 +44,7 @@ const config = {
         BonusWindow,
         Rule,
         Level2Finish,
+        Level3Finish,
         characterCustomization
         
     ]

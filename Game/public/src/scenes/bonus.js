@@ -8,7 +8,7 @@ export default class Bonus extends Phaser.Scene{
             key: 'Bonus'
         });
 
-        this.buttons_img = [
+        this.level2buttons_img = [
             'skiing',
             'karting',
             'voucher',
@@ -19,27 +19,56 @@ export default class Bonus extends Phaser.Scene{
             'saving'
         ];
 
-        this.prices = {
+        this.level3buttons_img = [
+            'planetarium',
+            'oceanarium',
+            'restaurant',
+            'bike',
+            'ship',
+            'cottage',
+            'anything',
+            'saving'
+        ];
+
+        this.level2prices = {
             'skiing': 5000,
             'karting': 4000,
             'voucher': 4000,
             'golf': 4000,
             'ship': 3000,
             'lasertag': 2500
-        }
+        };
+
+        this.level3prices = {
+            'planetarium': 6000,
+            'oceanarium': 7000,
+            'restaurant': 4500,
+            'bike': 7000,
+            'ship': 9000,
+            'cottage': 7500
+        };
 
         this.buttons = {};
     }
 
     preload() {
         this.load.image('bg', 'src/assets/level2/bonus/bg.png');
-        this.load.image('skiing', 'src/assets/level2/bonus/skiing.png');
         this.load.image('score', 'src/assets/level2/bonus/score.png');
-        this.load.image('karting', 'src/assets/level2/bonus/karting.png');
-        this.load.image('voucher', 'src/assets/level2/bonus/voucher.png');
-        this.load.image('golf', 'src/assets/level2/bonus/golf.png');
+        if (stat.active_level === 'level2'){
+            this.load.image('skiing', 'src/assets/level2/bonus/level2/skiing.png');
+            this.load.image('karting', 'src/assets/level2/bonus/level2/karting.png');
+            this.load.image('voucher', 'src/assets/level2/bonus/level2/voucher.png');
+            this.load.image('golf', 'src/assets/level2/bonus/level2/golf.png');
+            this.load.image('lasertag', 'src/assets/level2/bonus/level2/lasertag.png');
+        }
+        else{
+            this.load.image('bike', 'src/assets/level2/bonus/level3/bike.png');
+            this.load.image('cottage', 'src/assets/level2/bonus/level3/cottage.png');
+            this.load.image('oceanarium', 'src/assets/level2/bonus/level3/oceanarium.png');
+            this.load.image('planetarium', 'src/assets/level2/bonus/level3/planetarium.png');
+            this.load.image('restaurant', 'src/assets/level2/bonus/level3/restaurant.png');
+        };
         this.load.image('ship', 'src/assets/level2/bonus/ship.png');
-        this.load.image('lasertag', 'src/assets/level2/bonus/lasertag.png');
         this.load.image('anything', 'src/assets/level2/bonus/anything.png');
         this.load.image('saving', 'src/assets/level2/bonus/saving.png');
     }
@@ -50,7 +79,14 @@ export default class Bonus extends Phaser.Scene{
         this.add.image(bg.x+bg.width*0.7*0.075, bg.y+bg.height*0.7*0.075, 'score').setScale(0.3, 0.3).setOrigin(0);
         this.score_txt = this.add.text(bg.x+bg.width*0.7*0.22, bg.y+bg.height*0.7*0.10, data.par.score, { font: '50px Courier', fill: '#ffede4' });
         this.par = data.par.scene;
-
+        if (stat.active_level === 'level2'){
+            this.buttons_img = this.level2buttons_img;
+            this.prices = this.level2prices;
+        }
+        else{
+            this.buttons_img = this.level3buttons_img;
+            this.prices = this.level3prices;
+        };
         for (let i = 0; i < 4; i++){
             var tmp = new Button(this);
             tmp.render(bg.x+bg.width*0.7*(0.15+0.23*(i)), bg.y+bg.height*0.7*0.4, this.buttons_img[i]);
