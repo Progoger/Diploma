@@ -41,23 +41,27 @@ export default class BonusWindow extends Phaser.Scene{
         var pay = null;
         var cross = null;
         if (data.bg === 'saving'){
-            var bg = this.add.image(innerWidth*0.2, innerHeight*0.1, data.bg).setScale(0.58, 0.58).setOrigin(0);
-            this.add.text(bg.x+bg.width*0.58*0.61, bg.y+bg.height*0.58*0.39, data.par.scene.players_saving, { font: '80px Courier', fill: '#ffede4' });
+            var bg = this.add.image(innerWidth*0.2, innerHeight*0.1, data.bg).setScale(0.58*stat.koeff, 0.58*stat.koeff).setOrigin(0);
+            var bg_width = bg.width*0.58*stat.koeff;
+            var bg_height = bg.height*0.58*stat.koeff;
+            this.add.text(bg.x+bg_width*0.61, bg.y+bg_height*0.39, data.par.scene.players_saving, { font: `${80*stat.koeff}px Courier`, fill: '#000000' });
             this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-            comp = this.add.image(bg.x+bg.width*0.58*0.5, bg.y+bg.height*0.58*0.74, 'complete').setScale(0.475, 0.475).setInteractive();
-            var cross = this.add.image(bg.x+bg.width*0.58*0.965, bg.y+bg.height*0.58*0.02, 'cross').setScale(0.09, 0.09).setInteractive();
+            comp = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.74, 'complete').setScale(0.475*stat.koeff, 0.475*stat.koeff).setInteractive();
+            var cross = this.add.image(bg.x+bg_width*0.965, bg.y+bg_height*0.02, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
         }
         else if(data.bg === 'anything'){
-            var bg = this.add.image(innerWidth*0.3, innerHeight*0.03, data.bg).setScale(0.4, 0.4).setOrigin(0);
-            this.add.text(bg.x+bg.width*0.4*0.6, bg.y+bg.height*0.4*0.17, data.par.scene.players_saving, { font: '60px Courier', fill: '#ffede4' });
+            var bg = this.add.image(innerWidth*0.3, innerHeight*0.03, data.bg).setScale(0.4*stat.koeff, 0.4*stat.koeff).setOrigin(0);
+            var bg_width = bg.width*0.4*stat.koeff;
+            var bg_height = bg.height*0.4*stat.koeff;
+            this.add.text(bg.x+bg_width*0.6, bg.y+bg_height*0.17, data.par.scene.players_saving, { font: `${60*stat.koeff}px Courier`, fill: '#000000' });
             this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-            var inp = this.add.image(bg.x+bg.width*0.4*0.43, bg.y+bg.height*0.4*0.415, 'input').setScale(0.27, 0.27).setInteractive();
-            this.goal = this.add.text(bg.x+bg.width*0.4*0.18, bg.y+bg.height*0.4*0.39, '', { font: '50px Courier', fill: '#ffede4' });
-            var inp1 = this.add.image(bg.x+bg.width*0.4*0.43, bg.y+bg.height*0.4*0.61, 'input').setScale(0.27, 0.27).setInteractive();
-            this.price = this.add.text(bg.x+bg.width*0.4*0.18, bg.y+bg.height*0.4*0.585, '', { font: '50px Courier', fill: '#ffede4' });
-            pay = this.add.image(bg.x+bg.width*0.4*0.43, bg.y+bg.height*0.4*0.73, 'pay1').setScale(0.27, 0.27).setInteractive();
-            comp = this.add.image(bg.x+bg.width*0.4*0.5, bg.y+bg.height*0.4*0.875, 'complete').setScale(0.32, 0.32).setInteractive();
-            cross = this.add.image(bg.x+bg.width*0.4*0.965, bg.y+bg.height*0.4*0.02, 'cross').setScale(0.09, 0.09).setInteractive();
+            var inp = this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.415, 'input').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+            this.goal = this.add.text(bg.x+bg_width*0.18, bg.y+bg_height*0.39, '', { font: `${50*stat.koeff}px Courier`, fill: '#000000' });
+            var inp1 = this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.61, 'input').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+            this.price = this.add.text(bg.x+bg_width*0.18, bg.y+bg_height*0.585, '', { font: `${50*stat.koeff}px Courier`, fill: '#000000' });
+            pay = this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.73, 'pay1').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+            comp = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.875, 'complete').setScale(0.32*stat.koeff, 0.32*stat.koeff).setInteractive();
+            cross = this.add.image(bg.x+bg_width*0.965, bg.y+bg_height*0.02, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 
             inp.on('pointerdown', function() {
                 this.click = 'goal';
@@ -91,7 +95,6 @@ export default class BonusWindow extends Phaser.Scene{
             }, this);
 
             this.input.keyboard.on('keydown', function (event) {
-                console.log(event.keyCode);
                 if (this.click === 'price'){
                     if (event.keyCode === 8 && this.price.text.length > 0)
                     {
@@ -117,12 +120,14 @@ export default class BonusWindow extends Phaser.Scene{
             }, this);
         }
         else{
-            var bg = this.add.image(innerWidth*0.3, innerHeight*0.05, data.bg).setScale(0.46, 0.46).setOrigin(0);
-            this.add.text(bg.x+bg.width*0.46*0.62, bg.y+bg.height*0.46*0.335, data.par.scene.players_saving, { font: '70px Courier', fill: '#ffede4' });
+            var bg = this.add.image(innerWidth*0.3, innerHeight*0.05, data.bg).setScale(0.46*stat.koeff, 0.46*stat.koeff).setOrigin(0);
+            var bg_width = bg.width*0.46*stat.koeff;
+            var bg_height = bg.height*0.46*stat.koeff;
+            this.add.text(bg.x+bg_width*0.62, bg.y+bg_height*0.335, data.par.scene.players_saving, { font: `${70*stat.koeff}px Courier`, fill: '#000000' });
             this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-            pay = this.add.image(bg.x+bg.width*0.46*0.425, bg.y+bg.height*0.46*0.65, 'pay').setScale(0.3, 0.3).setInteractive();
-            comp = this.add.image(bg.x+bg.width*0.46*0.5, bg.y+bg.height*0.46*0.835, 'complete').setScale(0.37, 0.37).setInteractive();
-            cross = this.add.image(bg.x+bg.width*0.46*0.965, bg.y+bg.height*0.46*0.02, 'cross').setScale(0.09, 0.09).setInteractive();
+            pay = this.add.image(bg.x+bg_width*0.425, bg.y+bg_height*0.65, 'pay').setScale(0.3*stat.koeff, 0.3*stat.koeff).setInteractive();
+            comp = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.835, 'complete').setScale(0.37*stat.koeff, 0.37*stat.koeff).setInteractive();
+            cross = this.add.image(bg.x+bg_width*0.965, bg.y+bg_height*0.02, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
         
             pay.on('pointerdown', function() {
                 let par = data.par.scene;
@@ -140,7 +145,6 @@ export default class BonusWindow extends Phaser.Scene{
                     data.but.bought = true;
                     data.but.img.setTint(0x696969);
                     data.but.img.scene.score_txt.setText(par.score);
-                    console.log(data.but);
                     par.scene.stop("BonusWindow");
                     par.scene.resume('Bonus');
                 }

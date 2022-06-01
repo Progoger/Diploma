@@ -79,25 +79,24 @@ export default class Level1 extends Phaser.Scene {
         )
         
         var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
-        this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
-        this.add.sprite(innerWidth-75, innerHeight/2-135, 'help').setScale(0.1, 0.1);
-        this.add.sprite(innerWidth-75, innerHeight/2, 'progress').setScale(0.1, 0.1);
-        this.add.sprite(innerWidth-75, innerHeight/2+135, 'statistics').setScale(0.1, 0.1);
-        this.add.sprite(175, 75, 'score').setScale(0.15, 0.15);
-        var textEntry = this.add.text(220, 40, this.score, { font: '75px Courier', fill: '#ffede4' });
+        this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2*stat.koeff, 0.2*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.4, 'help').setScale(0.1*stat.koeff, 0.1*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.55, 'progress').setScale(0.1*stat.koeff, 0.1*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.7, 'statistics').setScale(0.1*stat.koeff, 0.1*stat.koeff);
+        this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        var textEntry = this.add.text(innerWidth*0.09, innerHeight*0.045, this.score, { font: `${75*stat.koeff}px Courier`, fill: '#ffede4' });
 
         let index = getRandomInt(this.len);
         let card = new Card(this, this.cards[index].split('_')[0]);
-        card.render(175, innerHeight/2, this.cards[index]);
+        card.render(innerWidth*0.12, innerHeight*0.45, this.cards[index]);
         this.cards.splice(index, 1);
         index = getRandomInt(this.len-1);
         card = new Card(this, this.cards[index].split('_')[0]);
-        card.render(175+252*1.15, innerHeight/2, this.cards[index]);
+        card.render(innerWidth*0.2925, innerHeight*0.45, this.cards[index]);
         this.cards.splice(index, 1);
 
         bg.on('pointerdown', function() {
             stat_record.sendMissClick();
-            console.log(stat_record);
         }, this);
 
         this.dealCards = (x, y, interval, a, n) => {
@@ -109,17 +108,17 @@ export default class Level1 extends Phaser.Scene {
             }
         };
 
-        this.dealCards(innerWidth-378, innerHeight/2, 252*0.15, 0, 17);
+        this.dealCards(innerWidth*0.81, innerHeight*0.45, innerWidth*0.019, 0, 17);
 
         card = new Card(this, this.cards[0].split('_')[0]);
-        card.render(175+252*2.3, innerHeight/2, this.cards[0]);
+        card.render(innerWidth*0.465, innerHeight*0.45, this.cards[0]);
         this.cards.splice(0, 1);
 
         let income = new Zone(this, "income");
-        income.renderZone(innerWidth*7/10, innerHeight*0.95, "income");
+        income.renderZone(innerWidth*0.7, innerHeight*0.945, "income");
     
         let expense = new Zone(this, "expense");
-        expense.renderZone(200, innerHeight*9/10, "expense");
+        expense.renderZone(innerWidth*0.15, innerHeight*0.87, "expense");
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
@@ -167,7 +166,7 @@ export default class Level1 extends Phaser.Scene {
                     'answer_number': 0
                 });                
             };
-            console.log(stat_record);
+            
             this.scene.tmp += 1;
             dropZone.clearTint();
             if (this.scene.tmp === 20){

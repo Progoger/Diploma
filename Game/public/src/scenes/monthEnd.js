@@ -20,15 +20,17 @@ export default class MonthEnd extends Phaser.Scene{
 
     create(data) {
         this.borrow_payed = 0;
-        var bg = this.add.image(innerWidth*0.28, innerHeight/20, `bg${data.par.scene.month}`).setScale(0.33, 0.33).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.28, innerHeight/20, `bg${data.par.scene.month}`).setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
+        var bg_width = bg.width*0.33*stat.koeff;
+        var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        this.add.image(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.53, 'input').setScale(0.22, 0.22);
-        var textEntry = this.add.text(bg.x+bg.width*0.33*0.22, bg.y+bg.height*0.33*0.50, '', { font: '58px Courier', fill: '#ffff00' });
-        var pay = this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.68, 'pay').setScale(0.27, 0.27).setInteractive();
-        var cont =  this.add.image(bg.x+bg.width*0.43*0.33, bg.y+bg.height*0.33*0.85, 'continue').setInteractive().setScale(0.22, 0.22);
-        this.score = this.add.text(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.215, data.par.scene.score, { font: '50px Courier', fill: '#000000' });
-        this.saving = this.add.text(bg.x+bg.width*0.33*0.6, bg.y+bg.height*0.33*0.295, data.par.scene.players_saving, { font: '50px Courier', fill: '#000000' });
-        this.debt = this.add.text(bg.x+bg.width*0.33*0.4, bg.y+bg.height*0.33*0.365, data.par.scene.players_debt, { font: '50px Courier', fill: '#000000' });
+        this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.53, 'input').setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.50, '', { font: `${stat.koeff*58}px Courier`, fill: '#ffff00' });
+        var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.68, 'pay').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+        var cont =  this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.85, 'continue').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        this.score = this.add.text(bg.x+bg_width*0.42, bg.y+bg_height*0.215, data.par.scene.score, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
+        this.saving = this.add.text(bg.x+bg_width*0.6, bg.y+bg_height*0.295, data.par.scene.players_saving, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
+        this.debt = this.add.text(bg.x+bg_width*0.4, bg.y+bg_height*0.365, data.par.scene.players_debt, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
         
         cont.on('pointerdown', function() {
             let par = data.par.scene;
@@ -40,7 +42,7 @@ export default class MonthEnd extends Phaser.Scene{
             par.cells[par.active_cell].img.setTint(0xffffff);
             par.month_view.destroy();
             par.month += 1;
-            par.month_view = par.add.sprite(1500, 75, 'month'+par.month).setScale(0.15, 0.15);
+            par.month_view = par.add.sprite(innerWidth*0.78, innerHeight*0.08, 'month'+par.month).setScale(0.15*stat.koeff, 0.15*stat.koeff);
             par.opened = false;
             par.scene.stop("MonthEnd");
             par.scene.resume();
@@ -60,8 +62,6 @@ export default class MonthEnd extends Phaser.Scene{
                 if (par.players_borrow != 0 && par.players_borrow > number){
                     let tmp = this.borrow_payed;
                     this.borrow_payed += number;
-                    console.log();
-                    console.log();
                     if (tmp === 0){
                         par.score += 0.5;
                     }

@@ -20,17 +20,22 @@ export default class Level3Finish extends Phaser.Scene{
 
     create(data) {
         var bg;
-        console.log(data.par);
+        var bg_width;
+        var bg_height;
         if (data.par.score < 32){
-            bg = this.add.image(innerWidth*0.35, innerHeight/20, 'bg').setScale(0.3, 0.3).setOrigin(0);
-            var comp = this.add.image(bg.x+bg.width*0.3*0.78, bg.y+bg.height*0.3*0.88, 'complete').setScale(0.08, 0.08).setInteractive().setTint(0x696969);
-            stat.lvl1_score = this.score;
+            bg = this.add.image(innerWidth*0.35, innerHeight/20, 'bg').setScale(0.4*stat.koeff, 0.4*stat.koeff).setOrigin(0);
+            bg_width = bg.width*0.4*stat.koeff;
+            bg_height = bg.height*0.4*stat.koeff;
+            var comp = this.add.image(bg.x+bg_width*0.78, bg.y+bg_height*0.88, 'complete').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive().setTint(0x696969);
+            stat.lvl3_score = this.score;
         }
         else{
-            bg = this.add.image(innerWidth*0.35, innerHeight/20, 'bgsuccess').setScale(0.3, 0.3).setOrigin(0);
-            var comp = this.add.image(bg.x+bg.width*0.3*0.78, bg.y+bg.height*0.3*0.88, 'complete').setScale(0.08, 0.08).setInteractive();
-            stat.lvl1_score = this.score;
-            stat.lvl1_completed = true;
+            bg = this.add.image(innerWidth*0.35, innerHeight/20, 'bgsuccess').setScale(0.4*stat.koeff, 0.4*stat.koeff).setOrigin(0);
+            bg_width = bg.width*0.4*stat.koeff;
+            bg_height = bg.height*0.4*stat.koeff;
+            var comp = this.add.image(bg.x+bg_width*0.78, bg.y+bg_height*0.88, 'complete').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
+            stat.lvl3_score = this.score;
+            stat.lvl3_completed = true;
 
             comp.on('pointerdown', function(event) {
                 data.par.scene.stop('Level3Finish');
@@ -39,9 +44,9 @@ export default class Level3Finish extends Phaser.Scene{
             }, this);
         };
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        this.add.text(bg.x+bg.width*0.3*0.53, bg.y+bg.height*0.3*0.32, data.par.score, { font: '100px Courier', fill: '#000000' });
-        var home = this.add.image(bg.x+bg.width*0.3*0.22, bg.y+bg.height*0.3*0.88, 'home').setScale(0.08, 0.08).setInteractive();
-        var replay = this.add.image(bg.x+bg.width*0.3*0.5, bg.y+bg.height*0.3*0.88, 'replay').setScale(0.08, 0.08).setInteractive();
+        this.add.text(bg.x+bg_width*0.55, bg.y+bg_height*0.34, data.par.score, { font: `${100*stat.koeff}px Courier`, fill: '#000000' });
+        var home = this.add.image(bg.x+bg_width*0.22, bg.y+bg_height*0.88, 'home').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
+        var replay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'replay').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
         
         home.on('pointerdown', function(event) {
             data.par.scene.stop('Level3Finish');

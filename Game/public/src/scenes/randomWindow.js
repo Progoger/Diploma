@@ -14,7 +14,7 @@ export default class RandomWindow extends Phaser.Scene{
         var active = stat.lvl2_active_cell.split(' ');
         this.load.image('bg', `src/assets/level2/${active[0]}/bg.png`);
         if (active[0] === 'entertainment'){
-            this.load.image('text', `src/assets/level2/${stat.active_level}/${active[0]}/${active[1]}.png`);
+            this.load.image('text', `src/assets/level2/${active[0]}/${stat.active_level}/${active[1]}.png`);
         }
         else{
             this.load.image('text', `src/assets/level2/${active[0]}/${active[1]}.png`);
@@ -35,18 +35,20 @@ export default class RandomWindow extends Phaser.Scene{
     create(data) {
         let cell = data.description.split(' ');
         data.par.scene.paused = false;
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.34, 0.34).setOrigin(0).setInteractive();
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.34*stat.koeff, 0.34*stat.koeff).setOrigin(0).setInteractive();
+        var bg_width = bg.width*0.34*stat.koeff;
+        var bg_height = bg.height*0.34*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         if (cell[0] === 'expense'){
-            this.add.image(bg.x+bg.width*0.34*0.08, bg.y+bg.height*0.34*0.3, 'text').setScale(0.33, 0.33).setOrigin(0);
+            this.add.image(bg.x+bg_width*0.08, bg.y+bg_height*0.3, 'text').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
         }
         else{
-            this.add.image(bg.x+bg.width*0.34*0.08, bg.y+bg.height*0.34*0.2, 'text').setScale(0.33, 0.33).setOrigin(0);  
+            this.add.image(bg.x+bg_width*0.08, bg.y+bg_height*0.2, 'text').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);  
         };
         if (cell[0] !== 'sidejob'){
-            var pay = this.add.image(bg.x+bg.width*0.34*0.42, bg.y+bg.height*0.34*0.64, 'pay').setScale(0.22, 0.22).setInteractive();
-            var pay1 = this.add.image(bg.x+bg.width*0.34*0.42, bg.y+bg.height*0.34*0.765, 'pay1').setScale(0.22, 0.22).setInteractive();
-            var np = this.add.image(bg.x+bg.width*0.34*0.42, bg.y+bg.height*0.34*0.89, 'np').setScale(0.22, 0.22).setInteractive();
+            var pay = this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.64, 'pay').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
+            var pay1 = this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.765, 'pay1').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
+            var np = this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.89, 'np').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
         
             pay.on('pointerdown', function() {
                 let par = data.par.scene;
@@ -121,8 +123,8 @@ export default class RandomWindow extends Phaser.Scene{
             }, this);
         }
         else{
-            var work = this.add.image(bg.x+bg.width*0.34*0.42, bg.y+bg.height*0.34*0.65, 'work').setScale(0.35, 0.35).setInteractive();
-            var nw = this.add.image(bg.x+bg.width*0.34*0.5, bg.y+bg.height*0.34*0.85, 'nw').setScale(0.34, 0.34).setInteractive();
+            var work = this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.65, 'work').setScale(0.35*stat.koeff, 0.35*stat.koeff).setInteractive();
+            var nw = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.85, 'nw').setScale(0.34*stat.koeff, 0.34*stat.koeff).setInteractive();
             
             work.on('pointerdown', function() {
                 let par = data.par.scene;

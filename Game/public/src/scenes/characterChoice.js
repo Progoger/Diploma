@@ -31,14 +31,14 @@ export default class characterChoice extends Phaser.Scene {
 
     create() {
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
-        var home = this.add.image(innerWidth/23, innerHeight/12, 'home').setScale(0.1, 0.1).setInteractive();
-        var complete = this.add.sprite(innerWidth-75, innerHeight-75, 'complete').setScale(0.1, 0.1).setInteractive();
+        var home = this.add.image(innerWidth/23, innerHeight/12, 'home').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
+        var complete = this.add.sprite(innerWidth*0.96, innerHeight*0.93, 'complete').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
         for (let i = 0; i < 5; i++){
             let tmp = new characterCard(this);
             this.characters.push(tmp);
             tmp.render(innerWidth*(0.11+0.195*i), innerHeight/2, 'girl'+(i+1), i);
         }
-        var customChar = this.add.sprite(innerWidth/2, innerHeight*0.9, 'charCustom').setScale(0.5, 0.5).setInteractive();
+        var customChar = this.add.sprite(innerWidth/2, innerHeight*0.9, 'charCustom').setScale(0.5*stat.koeff, 0.5*stat.koeff).setInteractive();
         complete.on('pointerdown', function (event) {
             if (this.activeChar !== null)
             {

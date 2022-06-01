@@ -19,16 +19,18 @@ export default class LevelFinish extends Phaser.Scene{
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth*0.28, innerHeight/20, 'bg').setScale(0.33, 0.33).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.28, innerHeight/20, 'bg').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
+        var bg_width = bg.width*0.33*stat.koeff;
+        var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        this.add.image(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.51, 'input').setScale(0.22, 0.22);
-        var textEntry = this.add.text(bg.x+bg.width*0.33*0.22, bg.y+bg.height*0.33*0.48, '', { font: '58px Courier', fill: '#ffff00' });
-        var pay = this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.63, 'pay').setScale(0.27, 0.27).setInteractive();
-        var bonus = this.add.image(bg.x+bg.width*0.33*0.425, bg.y+bg.height*0.33*0.755, 'bonus').setScale(0.22, 0.22).setInteractive();
-        var cont =  this.add.image(bg.x+bg.width*0.5*0.33, bg.y+bg.height*0.33*0.88, 'finish').setInteractive().setScale(0.27, 0.27);
-        this.score = this.add.text(bg.x+bg.width*0.33*0.42, bg.y+bg.height*0.33*0.215, data.par.scene.score, { font: '50px Courier', fill: '#000000' });
-        this.saving = this.add.text(bg.x+bg.width*0.33*0.6, bg.y+bg.height*0.33*0.295, data.par.scene.players_saving, { font: '50px Courier', fill: '#000000' });
-        this.debt = this.add.text(bg.x+bg.width*0.33*0.4, bg.y+bg.height*0.33*0.365, data.par.scene.players_debt, { font: '50px Courier', fill: '#000000' });
+        this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.51, 'input').setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.48, '', { font: `${stat.koeff*58}px Courier`, fill: '#ffff00' });
+        var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.63, 'pay').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+        var bonus = this.add.image(bg.x+bg_width*0.425, bg.y+bg_height*0.755, 'bonus').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
+        var cont =  this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'finish').setInteractive().setScale(0.27*stat.koeff, 0.27*stat.koeff);
+        this.score = this.add.text(bg.x+bg_width*0.42, bg.y+bg_height*0.215, data.par.scene.score, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
+        this.saving = this.add.text(bg.x+bg_width*0.6, bg.y+bg_height*0.295, data.par.scene.players_saving, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
+        this.debt = this.add.text(bg.x+bg_width*0.4, bg.y+bg_height*0.365, data.par.scene.players_debt, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
 
         this.par = data.par.scene;
 
@@ -73,7 +75,6 @@ export default class LevelFinish extends Phaser.Scene{
             this.par.active_cell = null;
             this.par.opened = false;
             this.par.scene.stop("LevelFinish");
-            console.log(stat.active_level);
             if (stat.active_level === 'level2'){
                 this.par.scene.launch("Level2Finish", {par: this.par});
             }

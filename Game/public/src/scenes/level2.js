@@ -1,6 +1,6 @@
 import Cell from '../helpers/cell.js';
 import { stat_record, stat } from '../helpers/statistics.js';
-import { getRandomInt, sleep } from '../helpers/functions.js';'../helpers/functions.js';
+import { getRandomInt, sleep } from '../helpers/functions.js';
 
 export default class Level2 extends Phaser.Scene {
     
@@ -132,20 +132,20 @@ export default class Level2 extends Phaser.Scene {
         this.score = 0;
         
         var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
-        this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2, 0.2);
-        this.add.sprite(innerWidth-75, innerHeight/2-130, 'help').setScale(0.09, 0.09);
-        this.add.sprite(innerWidth-75, innerHeight/2-20, 'progress').setScale(0.09, 0.09);
-        this.add.sprite(innerWidth-75, innerHeight/2+90, 'statistics').setScale(0.09, 0.09);
-        this.add.sprite(innerWidth-75, innerHeight/2+200, 'character').setScale(0.09, 0.09);
-        this.add.sprite(175, 75, 'score').setScale(0.15, 0.15);
-        this.score_txt = this.add.text(150, 40, this.score, { font: '70px Courier', fill: '#ffede4' });
-        this.add.sprite(500, 75, 'money').setScale(0.15, 0.15);
-        this.money = this.add.text(450, 53, this.players_money, { font: '60px Courier', fill: '#ffede4' });
-        this.add.sprite(825, 75, 'saving').setScale(0.15, 0.15);
-        this.saving = this.add.text(825, 53, this.players_saving, { font: '50px Courier', fill: '#ffede4' });
-        this.add.sprite(1150, 75, 'debt').setScale(0.15, 0.15);
-        this.debt = this.add.text(1125, 53, this.players_debt, { font: '50px Courier', fill: '#ffede4' });
-        this.month_view = this.add.sprite(1500, 75, 'month'+this.month).setScale(0.15, 0.15);
+        this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2*stat.koeff, 0.2*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.38, 'help').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.5, 'progress').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.62, 'statistics').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.74, 'character').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        this.score_txt = this.add.text(innerWidth*0.07, innerHeight*0.04, this.score, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.add.sprite(innerWidth*0.26, innerHeight*0.08, 'money').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        this.money = this.add.text(innerWidth*0.235, innerHeight*0.057, this.players_money, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.add.sprite(innerWidth*0.42, innerHeight*0.08, 'saving').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        this.saving = this.add.text(innerWidth*0.42, innerHeight*0.057, this.players_saving, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.add.sprite(innerWidth*0.60, innerHeight*0.08, 'debt').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        this.debt = this.add.text(innerWidth*0.585, innerHeight*0.057, this.players_debt, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.month_view = this.add.sprite(innerWidth*0.78, innerHeight*0.08, 'month'+this.month).setScale(0.15*stat.koeff, 0.15*stat.koeff);
 
         let cell = new Cell(this);
         this.cells.push(cell);
@@ -173,8 +173,8 @@ export default class Level2 extends Phaser.Scene {
         this.cells[this.active_cell].img.setTint(0xffffff);
         this.cells[this.active_cell].img.active = true;
         stat.lvl2_active_cell = this.cells_description[this.active_cell];
-        var borrow = this.add.sprite(innerWidth/12, innerHeight*0.58, 'bomb').setScale(0.17, 0.17).setInteractive();
-        var save = this.add.sprite(innerWidth/12+cell.width, innerHeight*0.58, 'moneybox').setScale(0.17, 0.17).setInteractive();
+        var borrow = this.add.sprite(innerWidth/12, innerHeight*0.58, 'bomb').setScale(0.17*stat.koeff, 0.17*stat.koeff).setInteractive();
+        var save = this.add.sprite(innerWidth/12+cell.width, innerHeight*0.58, 'moneybox').setScale(0.17*stat.koeff, 0.17*stat.koeff).setInteractive();
         
         borrow.on('pointerdown', function() {
             this.scene.launch('Borrow', {par:this.scene});
@@ -191,7 +191,6 @@ export default class Level2 extends Phaser.Scene {
 
         bg.on('pointerdown', function() {
             stat_record.sendMissClick();
-            console.log(stat_record);
         }, this);
     }
 
@@ -239,7 +238,7 @@ export default class Level2 extends Phaser.Scene {
                 this.cells[this.active_cell].img.active = false;
                 this.cells[this.active_cell].img.setTint(0x696969);
                 this.active_cell = null;
-                var comp = this.add.sprite(innerWidth*0.96, innerHeight*0.96, 'complete').setScale(0.1, 0.1).setInteractive();
+                var comp = this.add.sprite(innerWidth*0.96, innerHeight*0.96, 'complete').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
                 comp.on('pointerdown', function() {
                     this.score -= (this.players_debt/500)*0.5 + 0.5;
                     this.saving.setText(this.players_saving);

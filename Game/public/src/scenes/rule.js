@@ -25,15 +25,17 @@ export default class Rule extends Phaser.Scene{
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth*0.15, innerHeight*0.05, 'bg').setScale(0.72, 0.72).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.15, innerHeight*0.05, 'bg').setScale(0.72*stat.koeff, 0.72*stat.koeff).setOrigin(0);
+        var bg_width = bg.width*0.72*stat.koeff;
+        var bg_height = bg.height*0.72*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        var text = this.add.image(bg.x+bg.width*0.72*0.5, bg.y+bg.height*0.72*0.54, data.sc+'_'+this.active).setScale(0.55, 0.55).setInteractive();
-        var left = this.add.image(bg.x+bg.width*0.72*0.06, bg.y+bg.height*0.72*0.53, 'left').setScale(0.09, 0.09).setInteractive();
-        var right = this.add.image(bg.x+bg.width*0.72*0.94, bg.y+bg.height*0.72*0.53, 'right').setScale(0.09, 0.09).setInteractive();
-        var cross = this.add.image(bg.x+bg.width*0.72*0.94, bg.y+bg.height*0.72*0.08, 'cross').setScale(0.09, 0.09).setInteractive();
+        var text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
+        var left = this.add.image(bg.x+bg_width*0.06, bg.y+bg_height*0.53, 'left').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
+        var right = this.add.image(bg.x+bg_width*0.94, bg.y+bg_height*0.53, 'right').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
+        var cross = this.add.image(bg.x+bg_width*0.94, bg.y+bg_height*0.08, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 
         if (data.sc){
-            var start = this.add.image(bg.x+bg.width*0.72*0.5, bg.y+bg.height*0.72*0.97, 'start').setScale(0.07, 0.07).setInteractive();
+            var start = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.97, 'start').setScale(0.07*stat.koeff, 0.07*stat.koeff).setInteractive();
             start.on('pointerdown', function() {
                 let par = data.par.scene;
                 par.scene.stop("Rule");
@@ -46,7 +48,7 @@ export default class Rule extends Phaser.Scene{
             if (this.active !== 1){
                 this.active --;
                 text.destroy();
-                text = this.add.image(bg.x+bg.width*0.72*0.5, bg.y+bg.height*0.72*0.54, data.sc+'_'+this.active).setScale(0.55, 0.55).setInteractive();
+                text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
             }
         }, this);
 
@@ -54,7 +56,7 @@ export default class Rule extends Phaser.Scene{
             if (this.active !== 1){
                 this.active ++;
                 text.destroy();
-                text = this.add.image(bg.x+bg.width*0.72*0.5, bg.y+bg.height*0.72*0.54, data.sc+'_'+this.active).setScale(0.55, 0.55).setInteractive();
+                text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
             }
         }, this);
 

@@ -18,9 +18,9 @@ export default class Description extends Phaser.Scene{
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth*0.28, innerHeight/21, `bg${data.par.scene.month}`).setScale(0.4, 0.4).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.28, innerHeight/21, `bg${data.par.scene.month}`).setScale(0.4*stat.koeff, 0.4*stat.koeff).setOrigin(0);
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        var get =  this.add.image(bg.x+bg.width*0.4*0.4, bg.y+bg.height*0.4*0.87, 'button').setInteractive().setScale(0.27, 0.27);
+        var get =  this.add.image(bg.x+bg.width*stat.koeff*0.16, bg.y+bg.height*stat.koeff*0.35, 'button').setInteractive().setScale(0.27*stat.koeff, 0.27*stat.koeff);
     
         get.on('pointerdown', function() {
             let par = data.par.scene;
@@ -35,8 +35,6 @@ export default class Description extends Phaser.Scene{
             par.cells[par.active_cell].img.active = false;
             par.cells[par.active_cell].img.setTint(0x696969);
             par.active_cell += 1;
-
-            par.active_cell = 11;
 
             par.cells[par.active_cell].img.active = true;
             par.cells[par.active_cell].img.setTint(0xffffff);            

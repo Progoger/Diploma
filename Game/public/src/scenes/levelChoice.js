@@ -22,44 +22,44 @@ export default class levelChoice extends Phaser.Scene {
     create() {
         let self = this;
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
-        var character = this.add.image(innerWidth/2, innerHeight/5, 'character').setScale(0.25, 0.25).setInteractive();
-        var help = this.add.image(innerWidth*2/3, innerHeight/5, 'help').setScale(0.1, 0.1).setInteractive();
+        var character = this.add.image(innerWidth/2, innerHeight/5, 'character').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
+        var help = this.add.image(innerWidth*2/3, innerHeight/5, 'help').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
         var hint = this.add.image(innerWidth*3/4, innerHeight/5, 'hint').setScale(0, 0);
         if (stat.character_chosed){
-            var level1 = this.add.image(innerWidth/2, innerHeight/5*2, 'level1').setScale(0.25, 0.25).setInteractive();
+            var level1 = this.add.image(innerWidth/2, innerHeight/5*2, 'level1').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
             
             level1.on('pointerdown', function (event) {
                 this.scene.launch("Rule", {description: '2', sc:'Level1', par: this.scene});
             }, this);
         }
         else{
-            this.add.image(innerWidth/2, innerHeight/5*2, 'block').setScale(0.25, 0.25).setInteractive();
+            this.add.image(innerWidth/2, innerHeight/5*2, 'block').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
         }
-        if (stat.lvl1_completed || true) {
-            var level2 = this.add.image(innerWidth/2, innerHeight/5*3, 'level2').setScale(0.25, 0.25).setInteractive();
+        if (stat.lvl1_completed) {
+            var level2 = this.add.image(innerWidth/2, innerHeight/5*3, 'level2').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
             
             level2.on('pointerdown', function (event) {
                 this.scene.launch("Rule", {description: '5', sc:'Level2', par: this.scene});
             }, this);
         }
         else{
-            this.add.image(innerWidth/2, innerHeight/5*3, 'block').setScale(0.25, 0.25).setInteractive();
+            this.add.image(innerWidth/2, innerHeight/5*3, 'block').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
         }
 
-        if (stat.lvl2_completed || true) {
-            var level3 = this.add.image(innerWidth/2, innerHeight/5*4, 'level3').setScale(0.25, 0.25).setInteractive();
+        if (stat.lvl2_completed) {
+            var level3 = this.add.image(innerWidth/2, innerHeight/5*4, 'level3').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
             
             level3.on('pointerdown', function (event) {
                 this.scene.launch("Rule", {description: '5', sc:'Level3', par: this.scene});
             }, this);
         }
         else{
-            this.add.image(innerWidth/2, innerHeight/5*4, 'block').setScale(0.25, 0.25).setInteractive();
+            this.add.image(innerWidth/2, innerHeight/5*4, 'block').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
         }
 
         help.on('pointerdown', function (event) {
             if (clicked === false){
-                hint.setScale(0.1, 0.1);
+                hint.setScale(0.1*stat.koeff, 0.1*stat.koeff);
                 clicked = true;
             }
             else{

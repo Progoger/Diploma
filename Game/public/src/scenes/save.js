@@ -21,14 +21,16 @@ export default class Save extends Phaser.Scene{
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.33, 0.33).setOrigin(0).setInteractive();
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0).setInteractive();
+        var bg_width = bg.width*0.33*stat.koeff;
+        var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        var input = this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.48, 'input').setScale(0.275, 0.275);
-        var textEntry = this.add.text(bg.x+bg.width*0.33*0.2, bg.y+bg.height*0.33*0.46, '', { font: '58px Courier', fill: '#ffff00' });
-        var save = this.add.image(bg.x+bg.width*0.33*0.4, bg.y+bg.height*0.33*0.61, 'save').setInteractive().setScale(0.2, 0.2);
-        var get = this.add.image(bg.x+bg.width*0.33*0.4, bg.y+bg.height*0.33*0.74, 'get').setInteractive().setScale(0.2, 0.2);
-        var bonus = this.add.image(bg.x+bg.width*0.33*0.5, bg.y+bg.height*0.33*0.88, 'bonus').setInteractive().setScale(0.265, 0.265);
-        var cross = this.add.image(bg.x+bg.width*0.33*0.97, bg.y*1.05, 'cross').setScale(0.09, 0.09).setInteractive();
+        var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.48, 'input').setScale(0.275*stat.koeff, 0.275*stat.koeff);
+        var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.46, '', { font: `${58*stat.koeff}px Courier`, fill: '#ffff00' });
+        var save = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.61, 'save').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
+        var get = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.74, 'get').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
+        var bonus = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'bonus').setInteractive().setScale(0.265*stat.koeff, 0.265*stat.koeff);
+        var cross = this.add.image(bg.x+bg_width*0.97, bg.y*1.05, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 
         this.input.keyboard.on('keydown', function (event) {
             if (event.keyCode === 8 && textEntry.text.length > 0)

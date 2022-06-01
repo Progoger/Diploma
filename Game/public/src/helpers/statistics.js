@@ -1,7 +1,7 @@
 var stat_record = new StatRecord({
     "levels_names": ["1 уровень", "2 уровень", "3 уровень"]
 });
-console.log(stat_record);
+
 class Statistics {
     constructor() {
         this.character_chosed = false;
@@ -11,9 +11,13 @@ class Statistics {
         this.lvl2_score = 0;
         this.lvl2_completed = false;
         this.lvl3_score = 0;
+        this.lvl3_completed = false;
         this.gender = 'girl';
         this.lvl2_active_cell = null;
         this.active_level = null;
+        this.common_width = 1920;
+        this.common_height = 937;
+        this.coeff = null;
     }
 };
 

@@ -1,4 +1,4 @@
-import {stat_record} from '../helpers/statistics.js';
+import {stat, stat_record} from '../helpers/statistics.js';
 
 export default class mainMenu extends Phaser.Scene {
     constructor() {
@@ -6,6 +6,12 @@ export default class mainMenu extends Phaser.Scene {
             key: 'mainMenu'
         });
         stat_record.gameStart();
+        if (innerWidth/stat.common_width < innerHeight/stat.common_height){
+            stat.koeff = innerWidth/stat.common_width;
+        }
+        else{
+            stat.koeff = innerHeight/stat.common_height;
+        }
     }
 
     preload() {
@@ -20,10 +26,10 @@ export default class mainMenu extends Phaser.Scene {
         
         let self = this;
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
-        var play = this.add.image(innerWidth/2, innerHeight/5, 'play').setScale(0.25, 0.25).setInteractive();
-        var rules = this.add.image(innerWidth/2, innerHeight/5*2, 'rules').setScale(0.25, 0.25).setInteractive();
-        this.add.image(innerWidth/2, innerHeight/5*3, 'statistics').setScale(0.25, 0.25);
-        var exit = this.add.image(innerWidth/2, innerHeight/5*4, 'exit').setScale(0.25, 0.25);
+        var play = this.add.image(innerWidth/2, innerHeight/5, 'play').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
+        var rules = this.add.image(innerWidth/2, innerHeight/5*2, 'rules').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
+        this.add.image(innerWidth/2, innerHeight/5*3, 'statistics').setScale(0.25*stat.koeff, 0.25*stat.koeff);
+        var exit = this.add.image(innerWidth/2, innerHeight/5*4, 'exit').setScale(0.25*stat.koeff, 0.25*stat.koeff);
         play.on('pointerdown', function (event) {
             this.scene.start("levelChoice");
           }, this);
@@ -33,7 +39,6 @@ export default class mainMenu extends Phaser.Scene {
           }, this);
 
         rules.on('pointerdown', function (event) {
-            console.log(this);
             this.scene.launch("Rule", {sc: '', par: this.scene});
         }, this);
     }
