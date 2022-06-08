@@ -20,10 +20,10 @@ export default class mainMenu extends Phaser.Scene {
         this.load.image('exit', 'src/assets/mainMenu/exit.png');
         this.load.image('rules', 'src/assets/mainMenu/rules.png');
         this.load.image('statistics', 'src/assets/mainMenu/statistics.png');
+        this.load.video('beginning', 'src/assets/videos/beginning.mp4');
     }
 
     create() {
-        
         let self = this;
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
         var play = this.add.image(innerWidth/2, innerHeight/5, 'play').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();

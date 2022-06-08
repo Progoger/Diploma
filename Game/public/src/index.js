@@ -18,6 +18,7 @@ import characterCustomization from "./scenes/characterCustomization.js";
 import RandomWindow from "./scenes/randomWindow.js";
 import BonusWindow from "./scenes/bonusWindow.js";
 import Rule from "./scenes/rule.js";
+import Beginning from "./scenes/beginning.js";
 
 const config = {
     type: Phaser.WEBGL,
@@ -26,6 +27,7 @@ const config = {
     height: innerHeight,
     scene: [
 
+        Beginning,
         mainMenu,
         characterChoice,
         Level1,
