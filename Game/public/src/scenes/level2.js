@@ -123,6 +123,7 @@ export default class Level2 extends Phaser.Scene {
             'answer_number': 1
         });
 
+        this.cells = [];
         this.win_i = 0;
         this.active_cell = 0;
         this.players_money = 0;
@@ -132,7 +133,7 @@ export default class Level2 extends Phaser.Scene {
         this.month = 1;
         stat.month = 1;
         this.score = 0;
-        
+
         var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg_l2').setScale(1*stat.koeffX, 0.866*stat.koeffY).setInteractive();
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2*stat.koeff, 0.2*stat.koeff);
         this.add.sprite(innerWidth*0.96, innerHeight*0.38, 'help_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);

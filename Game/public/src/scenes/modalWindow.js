@@ -143,12 +143,10 @@ export default class Window extends Phaser.Scene{
             if (this.clicked === false && this.tries >= this.help_tries[data.type]){
                 hint.setScale(0.2*stat.koeff, 0.2*stat.koeff);
                 this.clicked = true;
-                console.log(1);
             }
             else{
                 hint.setScale(0, 0);
                 this.clicked = false;
-                console.log(12);
             }
         }, this);
     }

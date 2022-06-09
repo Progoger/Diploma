@@ -43,7 +43,6 @@ export default class BonusWindow extends Phaser.Scene{
         if (data.bg === 'saving_b'){
             data.bg = data.bg.split('_')[0];
             var bg = this.add.image(innerWidth*0.2, innerHeight*0.1, data.bg+'_bw').setScale(0.58*stat.koeff, 0.58*stat.koeff).setOrigin(0);
-            console.log(bg);
             var bg_width = bg.width*0.58*stat.koeff;
             var bg_height = bg.height*0.58*stat.koeff;
             this.add.text(bg.x+bg_width*0.61, bg.y+bg_height*0.39, data.par.scene.players_saving, { font: `${80*stat.koeff}px Courier`, fill: '#000000' });
