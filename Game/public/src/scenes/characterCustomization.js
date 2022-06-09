@@ -69,7 +69,7 @@ export default class characterCustomization extends Phaser.Scene {
         this.character = this.add.image(innerWidth*0.275, innerHeight*0.5, this.appereance).setScale(0.14*stat.koeff, 0.14*stat.koeff).setInteractive();
 
         back.on('pointerdown', function (event) {
-            this.scene.scene.start("characterCustomization");
+            this.scene.scene.start("characterChoice");
         });
 
         cont.on('pointerdown', function (event) {

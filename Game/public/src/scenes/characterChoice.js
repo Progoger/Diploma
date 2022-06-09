@@ -47,6 +47,9 @@ export default class characterChoice extends Phaser.Scene {
             }
             this.scene.start("mainMenu");
         }, this);
+        home.on('pointerdown', function (event) {
+            this.scene.start("mainMenu");
+        }, this);
         customChar.on('pointerdown', function (event) {
             if (this.scene.activeChar || this.scene.activeChar === 0){
                 this.scene.scene.start("characterCustomization", {'appereance':  (this.scene.activeChar+1)+this.scene.appearence[this.scene.activeChar]});
