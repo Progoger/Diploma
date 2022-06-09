@@ -112,7 +112,7 @@ export default class Level2 extends Phaser.Scene {
         this.load.image('help_l2', 'src/assets/common/help.png');
         this.load.image('progress_l2', 'src/assets/common/progress.png');
         this.load.image('statistics_l2', 'src/assets/common/statistics.png');
-        this.load.image('score_l2', 'src/assets/common/score.png');
+        this.load.image('score_l2', 'src/assets/level2/score.png');
         this.load.image('character_l2', 'src/assets/common/character.png');
         this.load.image('avatar', `src/assets/appereance/${stat.gender}/${stat.character.split('_')[0]}/${stat.character}.png`);
     }
@@ -140,13 +140,13 @@ export default class Level2 extends Phaser.Scene {
         this.add.sprite(innerWidth*0.96, innerHeight*0.62, 'statistics_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
         this.add.sprite(innerWidth*0.96, innerHeight*0.74, 'character_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
         this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score_l2').setScale(0.15*stat.koeff, 0.15*stat.koeff);
-        this.score_txt = this.add.text(innerWidth*0.07, innerHeight*0.04, this.score, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.score_txt = this.add.text(innerWidth*0.09, innerHeight*0.055, this.score, { font: `${55*stat.koeff}px Courier`, fill: '#ffede4' });
         this.add.sprite(innerWidth*0.26, innerHeight*0.08, 'money').setScale(0.15*stat.koeff, 0.15*stat.koeff);
-        this.money = this.add.text(innerWidth*0.235, innerHeight*0.057, this.players_money, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.money = this.add.text(innerWidth*0.24, innerHeight*0.06, this.players_money, { font: `${50*stat.koeff}px Courier`, fill: '#ffede4' });
         this.add.sprite(innerWidth*0.42, innerHeight*0.08, 'saving').setScale(0.15*stat.koeff, 0.15*stat.koeff);
-        this.saving = this.add.text(innerWidth*0.42, innerHeight*0.057, this.players_saving, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.saving = this.add.text(innerWidth*0.41, innerHeight*0.065, this.players_saving, { font: `${45*stat.koeff}px Courier`, fill: '#ffede4' });
         this.add.sprite(innerWidth*0.60, innerHeight*0.08, 'debt').setScale(0.15*stat.koeff, 0.15*stat.koeff);
-        this.debt = this.add.text(innerWidth*0.585, innerHeight*0.057, this.players_debt, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.debt = this.add.text(innerWidth*0.585, innerHeight*0.065, this.players_debt, { font: `${45*stat.koeff}px Courier`, fill: '#ffede4' });
         this.month_view = this.add.sprite(innerWidth*0.78, innerHeight*0.08, 'month'+this.month).setScale(0.15*stat.koeff, 0.15*stat.koeff);
 
         let cell = new Cell(this);
@@ -240,7 +240,7 @@ export default class Level2 extends Phaser.Scene {
                 this.cells[this.active_cell].img.active = false;
                 this.cells[this.active_cell].img.setTint(0x696969);
                 this.active_cell = null;
-                var comp = this.add.sprite(innerWidth*0.96, innerHeight*0.96, 'complete').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
+                var comp = this.add.sprite(innerWidth*0.96, innerHeight*0.93, 'complete_l2').setScale(0.08*stat.koeff, 0.08*stat.koeff).setInteractive().setTint(0x800000);
                 comp.on('pointerdown', function() {
                     this.score -= (this.players_debt/500)*0.5 + 0.5;
                     this.saving.setText(this.players_saving);

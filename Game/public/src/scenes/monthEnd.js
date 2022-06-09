@@ -25,7 +25,7 @@ export default class MonthEnd extends Phaser.Scene{
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.53, 'input_me').setScale(0.22*stat.koeff, 0.22*stat.koeff);
-        var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.50, '', { font: `${stat.koeff*58}px Courier`, fill: '#ffff00' });
+        var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.50, '', { font: `${stat.koeff*58}px Courier`, fill: '#000000' });
         var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.68, 'pay_me').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
         var cont =  this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.85, 'continue_me').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
         this.score = this.add.text(bg.x+bg_width*0.42, bg.y+bg_height*0.215, data.par.scene.score, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });

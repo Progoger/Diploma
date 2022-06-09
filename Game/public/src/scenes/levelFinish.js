@@ -24,7 +24,7 @@ export default class LevelFinish extends Phaser.Scene{
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.51, 'input_lf').setScale(0.22*stat.koeff, 0.22*stat.koeff);
-        var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.48, '', { font: `${stat.koeff*58}px Courier`, fill: '#ffff00' });
+        var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.48, '', { font: `${stat.koeff*58}px Courier`, fill: '#000000' });
         var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.63, 'pay_lf').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
         var bonus = this.add.image(bg.x+bg_width*0.425, bg.y+bg_height*0.755, 'bonus_lf').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
         var cont =  this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'finish_lf').setInteractive().setScale(0.27*stat.koeff, 0.27*stat.koeff);

@@ -26,7 +26,7 @@ export default class Save extends Phaser.Scene{
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.48, 'input_save').setScale(0.275*stat.koeff, 0.275*stat.koeff);
-        var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.46, '', { font: `${58*stat.koeff}px Courier`, fill: '#ffff00' });
+        var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.46, '', { font: `${58*stat.koeff}px Courier`, fill: '#000000' });
         var save = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.61, 'save_save').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
         var get = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.74, 'get_save').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
         var bonus = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'bonus_save').setInteractive().setScale(0.265*stat.koeff, 0.265*stat.koeff);

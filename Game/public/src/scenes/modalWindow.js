@@ -1,6 +1,6 @@
 import { stat_record, stat } from '../helpers/statistics.js';
 
-let clicked = false;
+
 
 export default class Window extends Phaser.Scene{
     constructor()
@@ -9,6 +9,10 @@ export default class Window extends Phaser.Scene{
             key: 'Window'
         });
         this.tries = 0;
+        this.help_tries = {
+            'range_diapason': 3,
+            'range_larger': 2
+        }
     }
 
     preload() {
@@ -17,11 +21,18 @@ export default class Window extends Phaser.Scene{
         this.load.image('cross_mw', 'src/assets/common/cross.png');
         this.load.image('input_mw', 'src/assets/level2/save/input.png');
         this.load.image('help_mw', 'src/assets/windows/help.png');
-        this.load.image(`hint_mw_${stat.lvl2_active_cell}`, `src/assets/level2/hints/${stat.lvl2_active_cell} common.png`);
-        this.load.image(`hint_uni_mw_${stat.lvl2_active_cell}`, `src/assets/level2/hints/${stat.lvl2_active_cell} unique.png`);
+        if (stat.lvl2_active_cell !== 'kids')
+        {
+            this.load.image(`hint_mw_${stat.active_level}_${stat.lvl2_active_cell}`, `src/assets/level2/hints/${stat.active_level}/${stat.lvl2_active_cell} common.png`);
+            this.load.image(`hint_uni_mw_${stat.active_level}_${stat.lvl2_active_cell}`, `src/assets/level2/hints/${stat.active_level}/${stat.lvl2_active_cell} unique.png`);    
+        }
+        else{
+            this.load.image(`hint_mw_${stat.active_level}_${stat.lvl2_active_cell}_${stat.month}`, `src/assets/level2/hints/${stat.active_level}/${stat.lvl2_active_cell} ${stat.month}.png`);
+        }
     }
 
     create(data) {
+        this.clicked = false;
         this.par = data.par.scene;
         var bg = this.add.image(innerWidth/3, innerHeight/12, `bg_mw_${stat.active_level}_${stat.lvl2_active_cell}`).setScale(0.6*stat.koeff, 0.6*stat.koeff).setOrigin(0).setInteractive();
         var bg_width = bg.width*0.6*stat.koeff;
@@ -51,13 +62,16 @@ export default class Window extends Phaser.Scene{
             pay = this.add.image(bg.x+bg_width*0.3, bg.y+bg_height*0.475, 'pay_mw').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
             var notpay = this.add.image(bg.x+bg_width*0.3, bg.y+bg_height*0.525, 'pay_mw').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
         };
-        var help = this.add.image(bg.x+bg_width*0.85, bg.y+bg_height*0.73, 'help_mw').setInteractive().setScale(0.08*stat.koeff, 0.08*stat.koeff).setTint(0x696969);;
+        var help = this.add.image(bg.x+bg_width*0.85, bg.y+bg_height*0.73, 'help_mw').setInteractive().setScale(0.08*stat.koeff, 0.08*stat.koeff).setTint(0x696969);
         var hint;
-        if (data.par.scene.month === data.par.scene.unique_hints[data.description]){
-            hint = this.add.image(bg.x+bg_width*1.08, bg.y+bg_height*0.68, `hint_uni_mw_${stat.lvl2_active_cell}`).setScale(0, 0);        
+        if (stat.lvl2_active_cell === 'kids'){
+            hint = this.add.image(bg.x+bg_width*1.08, bg.y+bg_height*0.68, `hint_mw_${stat.active_level}_${stat.lvl2_active_cell}_${stat.month}`).setScale(0, 0);
+        }
+        else if (data.par.scene.month === data.par.scene.unique_hints[data.description]){
+            hint = this.add.image(bg.x+bg_width*1.08, bg.y+bg_height*0.68, `hint_uni_mw_${stat.active_level}_${stat.lvl2_active_cell}`).setScale(0, 0);        
         }
         else{
-            hint = this.add.image(bg.x+bg_width*1.08, bg.y+bg_height*0.68, `hint_mw_${stat.lvl2_active_cell}`).setScale(0, 0);        
+            hint = this.add.image(bg.x+bg_width*1.08, bg.y+bg_height*0.68, `hint_mw_${stat.active_level}_${stat.lvl2_active_cell}`).setScale(0, 0);        
         }       
         
         cross.on('pointerdown', function() {
@@ -67,12 +81,13 @@ export default class Window extends Phaser.Scene{
         }, this);
 
         pay.on('pointerdown', function() {
+            this.tries += 1;
             let par = data.par.scene;
             if (data.type.split('_').length > 1){
                 var number = parseInt(textEntry.text);
                 var range = par.range_payments[data.type.split('_')[1]+par.month][data.description];
                 if (typeof range !== 'number' && number >= range[0] && number <= range[1] && number <= par.players_money){
-                    if (this.tries < 3){
+                    if (this.tries <= this.help_tries[data.type]){
                         par.score += 1;
                     };
                     par.players_money -= number;
@@ -90,7 +105,7 @@ export default class Window extends Phaser.Scene{
                     this.move(par);
                 }
                 else if(number >= range && number <= par.players_money){
-                    if (this.tries < 3){
+                    if (this.tries <= this.help_tries[data.type]){
                         par.score += 1;
                     };
                     par.players_money -= number;
@@ -109,7 +124,7 @@ export default class Window extends Phaser.Scene{
                 };
                 textEntry.setText('');
             };
-            this.tries += 1;
+            
 
             stat_record.sendAnswer({
                 'correct': false
@@ -118,19 +133,22 @@ export default class Window extends Phaser.Scene{
                 'answer_number': 1
             });
 
-            if (this.tries === 3){
+            if (this.tries === this.help_tries[data.type]){
                 help.setTint(0xffffff);
             };
         }, this);
 
         help.on('pointerdown', function (event) {
-            if (clicked === false && this.tries >= 3){
+            
+            if (this.clicked === false && this.tries >= this.help_tries[data.type]){
                 hint.setScale(0.2*stat.koeff, 0.2*stat.koeff);
-                clicked = true;
+                this.clicked = true;
+                console.log(1);
             }
             else{
                 hint.setScale(0, 0);
-                clicked = false;
+                this.clicked = false;
+                console.log(12);
             }
         }, this);
     }

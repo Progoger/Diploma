@@ -14,7 +14,7 @@ export default class Borrow extends Phaser.Scene{
     preload() {
         this.load.image('bg_borrow', `src/assets/level2/borrow/bg.png`);
         this.load.image('borrow_borrow', 'src/assets/level2/borrow/borrow.png');
-        this.load.image('cross', 'src/assets/common/cross.png');
+        this.load.image('cross_borrow', 'src/assets/common/cross.png');
         this.load.image('input_borrow', 'src/assets/level2/save/input.png');
     }
 
@@ -24,7 +24,7 @@ export default class Borrow extends Phaser.Scene{
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.72, 'input_borrow').setScale(0.27*stat.koeff, 0.27*stat.koeff);
-        var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.68, '', { font: `${58*stat.koeff}px Courier`, fill: '#ffff00' });
+        var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.68, '', { font: `${58*stat.koeff}px Courier`, fill: '#000000' });
         var borrow = this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.87, 'borrow_borrow').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
         var cross = this.add.image(bg.x+bg_width*0.97, bg.y*1.05, 'cross_borrow').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 

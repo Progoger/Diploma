@@ -36,8 +36,6 @@ export default class Description extends Phaser.Scene{
             par.cells[par.active_cell].img.setTint(0x696969);
             par.active_cell += 1;
 
-            par.active_cell = 11;
-
             par.cells[par.active_cell].img.active = true;
             par.cells[par.active_cell].img.setTint(0xffffff);            
             par.opened = false;

@@ -41,7 +41,13 @@ export default class Level3Finish extends Phaser.Scene{
             comp.on('pointerdown', function(event) {
                 data.par.scene.stop('Level3Finish');
                 data.par.scene.stop();
-                data.par.scene.start("Beginning", {video: 'end'});
+                if (stat.lvl3_completed === true)
+                {
+                    data.par.scene.start("Beginning", {video: 'end'});
+                }
+                else{
+                    data.par.scene.start("mainMenu");
+                };
                 stat_record.gameEnd();
             }, this);
         };
@@ -53,7 +59,13 @@ export default class Level3Finish extends Phaser.Scene{
         home.on('pointerdown', function(event) {
             data.par.scene.stop('Level3Finish');
             data.par.scene.stop('Level3');
-            data.par.scene.start("Beginning", {video: 'end'});
+            if (stat.lvl3_completed === true)
+            {
+                data.par.scene.start("Beginning", {video: 'end'});
+            }
+            else{
+                data.par.scene.start("mainMenu");
+            };
             stat_record.gameEnd();
         }, this);
         

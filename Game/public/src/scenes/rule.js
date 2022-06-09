@@ -25,6 +25,9 @@ export default class Rule extends Phaser.Scene{
     }
 
     create(data) {
+        if (data.bg){
+            this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1*stat.koeffX, 0.866*stat.koeffY);
+        }
         var bg = this.add.image(innerWidth*0.15, innerHeight*0.05, 'bg_r').setScale(0.72*stat.koeff, 0.72*stat.koeff).setOrigin(0);
         var bg_width = bg.width*0.72*stat.koeff;
         var bg_height = bg.height*0.72*stat.koeff;

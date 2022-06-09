@@ -40,7 +40,7 @@ export default class Level1Finish extends Phaser.Scene{
             comp.on('pointerdown', function(event) {
                 data.par.scene.stop('Level1Finish');
                 data.par.scene.stop();
-                data.par.scene.launch("Rule", {description: '5', sc:'Level2', par: this.scene});
+                data.par.scene.launch("Rule", {description: '5', sc:'Level2', par: this.scene, bg: true});
             }, this);
         };
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
