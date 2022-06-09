@@ -11,7 +11,7 @@ export default class Rule extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg', 'src/assets/rules/bg.png');
+        this.load.image('bg_r', 'src/assets/rules/bg.png');
         this.load.image('_1', 'src/assets/rules/_1.png');
         this.load.image('characterChoice_1', 'src/assets/rules/characterChoice_1.png');
         this.load.image('Level1_1', 'src/assets/rules/Level1_1.png');
@@ -25,7 +25,7 @@ export default class Rule extends Phaser.Scene{
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth*0.15, innerHeight*0.05, 'bg').setScale(0.72*stat.koeff, 0.72*stat.koeff).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.15, innerHeight*0.05, 'bg_r').setScale(0.72*stat.koeff, 0.72*stat.koeff).setOrigin(0);
         var bg_width = bg.width*0.72*stat.koeff;
         var bg_height = bg.height*0.72*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);

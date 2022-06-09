@@ -11,23 +11,23 @@ export default class MonthEnd extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg1', 'src/assets/level2/ends/end1.png');
-        this.load.image('bg2', 'src/assets/level2/ends/end2.png');
-        this.load.image('input', 'src/assets/level2/ends/input.png');
-        this.load.image('pay', 'src/assets/level2/ends/pay.png');
-        this.load.image('continue', 'src/assets/level2/ends/continue.png');
+        this.load.image('bg1_me', 'src/assets/level2/ends/end1.png');
+        this.load.image('bg2_me', 'src/assets/level2/ends/end2.png');
+        this.load.image('input_me', 'src/assets/level2/ends/input.png');
+        this.load.image('pay_me', 'src/assets/level2/ends/pay.png');
+        this.load.image('continue_me', 'src/assets/level2/ends/continue.png');
     }
 
     create(data) {
         this.borrow_payed = 0;
-        var bg = this.add.image(innerWidth*0.28, innerHeight/20, `bg${data.par.scene.month}`).setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.28, innerHeight/20, `bg${data.par.scene.month}_me`).setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
         var bg_width = bg.width*0.33*stat.koeff;
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.53, 'input').setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.53, 'input_me').setScale(0.22*stat.koeff, 0.22*stat.koeff);
         var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.50, '', { font: `${stat.koeff*58}px Courier`, fill: '#ffff00' });
-        var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.68, 'pay').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
-        var cont =  this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.85, 'continue').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.68, 'pay_me').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+        var cont =  this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.85, 'continue_me').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
         this.score = this.add.text(bg.x+bg_width*0.42, bg.y+bg_height*0.215, data.par.scene.score, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
         this.saving = this.add.text(bg.x+bg_width*0.6, bg.y+bg_height*0.295, data.par.scene.players_saving, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
         this.debt = this.add.text(bg.x+bg_width*0.4, bg.y+bg_height*0.365, data.par.scene.players_debt, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
@@ -42,6 +42,7 @@ export default class MonthEnd extends Phaser.Scene{
             par.cells[par.active_cell].img.setTint(0xffffff);
             par.month_view.destroy();
             par.month += 1;
+            stat.month += 1;
             par.month_view = par.add.sprite(innerWidth*0.78, innerHeight*0.08, 'month'+par.month).setScale(0.15*stat.koeff, 0.15*stat.koeff);
             par.opened = false;
             par.scene.stop("MonthEnd");

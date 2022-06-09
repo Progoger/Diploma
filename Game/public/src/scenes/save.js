@@ -12,25 +12,25 @@ export default class Save extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg', `src/assets/level2/save/bg.png`);
-        this.load.image('save', 'src/assets/level2/save/save.png');
-        this.load.image('get', 'src/assets/level2/save/get.png');
-        this.load.image('bonus', 'src/assets/level2/save/bonus.png');
-        this.load.image('cross', 'src/assets/common/cross.png');
-        this.load.image('input', 'src/assets/level2/save/input.png');
+        this.load.image('bg_save', `src/assets/level2/save/bg.png`);
+        this.load.image('save_save', 'src/assets/level2/save/save.png');
+        this.load.image('get_save', 'src/assets/level2/save/get.png');
+        this.load.image('bonus_save', 'src/assets/level2/save/bonus.png');
+        this.load.image('cross_save', 'src/assets/common/cross.png');
+        this.load.image('input_save', 'src/assets/level2/save/input.png');
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0).setInteractive();
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg_save').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0).setInteractive();
         var bg_width = bg.width*0.33*stat.koeff;
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.48, 'input').setScale(0.275*stat.koeff, 0.275*stat.koeff);
+        var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.48, 'input_save').setScale(0.275*stat.koeff, 0.275*stat.koeff);
         var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.46, '', { font: `${58*stat.koeff}px Courier`, fill: '#ffff00' });
-        var save = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.61, 'save').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
-        var get = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.74, 'get').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
-        var bonus = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'bonus').setInteractive().setScale(0.265*stat.koeff, 0.265*stat.koeff);
-        var cross = this.add.image(bg.x+bg_width*0.97, bg.y*1.05, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
+        var save = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.61, 'save_save').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
+        var get = this.add.image(bg.x+bg_width*0.4, bg.y+bg_height*0.74, 'get_save').setInteractive().setScale(0.2*stat.koeff, 0.2*stat.koeff);
+        var bonus = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'bonus_save').setInteractive().setScale(0.265*stat.koeff, 0.265*stat.koeff);
+        var cross = this.add.image(bg.x+bg_width*0.97, bg.y*1.05, 'cross_save').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 
         this.input.keyboard.on('keydown', function (event) {
             if (event.keyCode === 8 && textEntry.text.length > 0)

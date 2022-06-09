@@ -18,6 +18,7 @@ class Statistics {
         this.common_width = 1920;
         this.common_height = 937;
         this.coeff = null;
+        this.month = null;
     }
 };
 

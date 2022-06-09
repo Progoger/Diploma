@@ -29,6 +29,7 @@ export default class Level2 extends Phaser.Scene {
         ];
         this.cells = [];
         this.month = 1;
+        
 
         this.unique_hints = {
             'public_utilities': 3,
@@ -89,7 +90,7 @@ export default class Level2 extends Phaser.Scene {
 
     preload() {
         
-        this.load.image('bg', 'src/assets/common/bg.png');
+        this.load.image('bg_l2', 'src/assets/common/bg.png');
         this.load.image('cell', 'src/assets/level2/cell.png');
         this.load.image('bomb', 'src/assets/level2/bomb.png');
         this.load.image('clothes', 'src/assets/level2/clothes.png');
@@ -107,12 +108,12 @@ export default class Level2 extends Phaser.Scene {
         this.load.image('month1', 'src/assets/level2/month1.png');
         this.load.image('month2', 'src/assets/level2/month2.png');
         this.load.image('month3', 'src/assets/level2/month3.png');
-        this.load.image('complete', 'src/assets/common/complete.png');
-        this.load.image('help', 'src/assets/common/help.png');
-        this.load.image('progress', 'src/assets/common/progress.png');
-        this.load.image('statistics', 'src/assets/common/statistics.png');
-        this.load.image('score', 'src/assets/common/score.png');
-        this.load.image('character', 'src/assets/common/character.png');
+        this.load.image('complete_l2', 'src/assets/common/complete.png');
+        this.load.image('help_l2', 'src/assets/common/help.png');
+        this.load.image('progress_l2', 'src/assets/common/progress.png');
+        this.load.image('statistics_l2', 'src/assets/common/statistics.png');
+        this.load.image('score_l2', 'src/assets/common/score.png');
+        this.load.image('character_l2', 'src/assets/common/character.png');
         this.load.image('avatar', `src/assets/appereance/${stat.gender}/${stat.character.split('_')[0]}/${stat.character}.png`);
     }
 
@@ -129,15 +130,16 @@ export default class Level2 extends Phaser.Scene {
         this.players_saving = 0;
         this.players_borrow = 0;
         this.month = 1;
+        stat.month = 1;
         this.score = 0;
         
-        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
+        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg_l2').setScale(1*stat.koeffX, 0.866*stat.koeffY).setInteractive();
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2*stat.koeff, 0.2*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.38, 'help').setScale(0.09*stat.koeff, 0.09*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.5, 'progress').setScale(0.09*stat.koeff, 0.09*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.62, 'statistics').setScale(0.09*stat.koeff, 0.09*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.74, 'character').setScale(0.09*stat.koeff, 0.09*stat.koeff);
-        this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.38, 'help_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.5, 'progress_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.62, 'statistics_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.74, 'character_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
+        this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score_l2').setScale(0.15*stat.koeff, 0.15*stat.koeff);
         this.score_txt = this.add.text(innerWidth*0.07, innerHeight*0.04, this.score, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });
         this.add.sprite(innerWidth*0.26, innerHeight*0.08, 'money').setScale(0.15*stat.koeff, 0.15*stat.koeff);
         this.money = this.add.text(innerWidth*0.235, innerHeight*0.057, this.players_money, { font: `${70*stat.koeff}px Courier`, fill: '#ffede4' });

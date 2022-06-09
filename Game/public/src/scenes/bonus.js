@@ -16,7 +16,7 @@ export default class Bonus extends Phaser.Scene{
             'ship',
             'lasertag',
             'anything',
-            'saving'
+            'saving_b'
         ];
 
         this.level3buttons_img = [
@@ -27,7 +27,7 @@ export default class Bonus extends Phaser.Scene{
             'ship',
             'cottage',
             'anything',
-            'saving'
+            'saving_b'
         ];
 
         this.level2prices = {
@@ -52,8 +52,8 @@ export default class Bonus extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg', 'src/assets/level2/bonus/bg.png');
-        this.load.image('score', 'src/assets/level2/bonus/score.png');
+        this.load.image('bg_b', 'src/assets/level2/bonus/bg.png');
+        this.load.image('score_b', 'src/assets/level2/bonus/score.png');
         if (stat.active_level === 'level2'){
             this.load.image('skiing', 'src/assets/level2/bonus/level2/skiing.png');
             this.load.image('karting', 'src/assets/level2/bonus/level2/karting.png');
@@ -70,15 +70,15 @@ export default class Bonus extends Phaser.Scene{
         };
         this.load.image('ship', 'src/assets/level2/bonus/ship.png');
         this.load.image('anything', 'src/assets/level2/bonus/anything.png');
-        this.load.image('saving', 'src/assets/level2/bonus/saving.png');
+        this.load.image('saving_b', 'src/assets/level2/bonus/saving.png');
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth*0.15, innerHeight*0.1, 'bg').setScale(0.7*stat.koeff, 0.7*stat.koeff).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.15, innerHeight*0.1, 'bg_b').setScale(0.7*stat.koeff, 0.7*stat.koeff).setOrigin(0);
         var bg_width = bg.width*0.7*stat.koeff;
         var bg_height = bg.height*0.7*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        this.add.image(bg.x+bg_width*0.075, bg.y+bg_height*0.075, 'score').setScale(0.3*stat.koeff, 0.3*stat.koeff).setOrigin(0);
+        this.add.image(bg.x+bg_width*0.075, bg.y+bg_height*0.075, 'score_b').setScale(0.3*stat.koeff, 0.3*stat.koeff).setOrigin(0);
         this.score_txt = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.10, data.par.score, { font: `${50*stat.koeff}px Courier`, fill: '#ffede4' });
         this.par = data.par.scene;
         if (stat.active_level === 'level2'){

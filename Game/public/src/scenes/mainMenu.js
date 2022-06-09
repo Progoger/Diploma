@@ -6,12 +6,9 @@ export default class mainMenu extends Phaser.Scene {
             key: 'mainMenu'
         });
         stat_record.gameStart();
-        if (innerWidth/stat.common_width < innerHeight/stat.common_height){
-            stat.koeff = innerWidth/stat.common_width;
-        }
-        else{
-            stat.koeff = innerHeight/stat.common_height;
-        }
+        
+        
+        
     }
 
     preload() {
@@ -20,12 +17,21 @@ export default class mainMenu extends Phaser.Scene {
         this.load.image('exit', 'src/assets/mainMenu/exit.png');
         this.load.image('rules', 'src/assets/mainMenu/rules.png');
         this.load.image('statistics', 'src/assets/mainMenu/statistics.png');
-        this.load.video('beginning', 'src/assets/videos/beginning.mp4');
     }
 
     create() {
+        // if (innerWidth/stat.common_width < innerHeight/stat.common_height){
+        //     stat.koeff = innerWidth/stat.common_width;
+            
+        // }
+        // else{
+        //     stat.koeff = innerHeight/stat.common_height;
+        // };
+        // stat.koeffX = innerWidth/stat.common_width;
+        // stat.koeffY = innerHeight/stat.common_height;
+        
         let self = this;
-        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
+        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1*stat.koeffX, 0.866*stat.koeffY);
         var play = this.add.image(innerWidth/2, innerHeight/5, 'play').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
         var rules = this.add.image(innerWidth/2, innerHeight/5*2, 'rules').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
         this.add.image(innerWidth/2, innerHeight/5*3, 'statistics').setScale(0.25*stat.koeff, 0.25*stat.koeff);
@@ -35,7 +41,8 @@ export default class mainMenu extends Phaser.Scene {
           }, this);
 
         exit.on('pointerdown', function (event) {
-            stat_record.endGame();
+            stat_record.gameEnd();
+            stat_record.sendLeaveGame();
           }, this);
 
         rules.on('pointerdown', function (event) {

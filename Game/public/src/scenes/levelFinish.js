@@ -11,23 +11,23 @@ export default class LevelFinish extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg', 'src/assets/level2/levelFinish/bg.png');
-        this.load.image('input', 'src/assets/level2/levelFinish/input.png');
-        this.load.image('pay', 'src/assets/level2/levelFinish/pay.png');
-        this.load.image('finish', 'src/assets/level2/levelFinish/finish.png');
-        this.load.image('bonus', 'src/assets/level2/levelFinish/bonus.png');
+        this.load.image('bg_lf', 'src/assets/level2/levelFinish/bg.png');
+        this.load.image('input_lf', 'src/assets/level2/levelFinish/input.png');
+        this.load.image('pay_lf', 'src/assets/level2/levelFinish/pay.png');
+        this.load.image('finish_lf', 'src/assets/level2/levelFinish/finish.png');
+        this.load.image('bonus_lf', 'src/assets/level2/levelFinish/bonus.png');
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth*0.28, innerHeight/20, 'bg').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
+        var bg = this.add.image(innerWidth*0.28, innerHeight/20, 'bg_lf').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0);
         var bg_width = bg.width*0.33*stat.koeff;
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.51, 'input').setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        this.add.image(bg.x+bg_width*0.42, bg.y+bg_height*0.51, 'input_lf').setScale(0.22*stat.koeff, 0.22*stat.koeff);
         var textEntry = this.add.text(bg.x+bg_width*0.22, bg.y+bg_height*0.48, '', { font: `${stat.koeff*58}px Courier`, fill: '#ffff00' });
-        var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.63, 'pay').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
-        var bonus = this.add.image(bg.x+bg_width*0.425, bg.y+bg_height*0.755, 'bonus').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
-        var cont =  this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'finish').setInteractive().setScale(0.27*stat.koeff, 0.27*stat.koeff);
+        var pay = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.63, 'pay_lf').setScale(0.27*stat.koeff, 0.27*stat.koeff).setInteractive();
+        var bonus = this.add.image(bg.x+bg_width*0.425, bg.y+bg_height*0.755, 'bonus_lf').setScale(0.22*stat.koeff, 0.22*stat.koeff).setInteractive();
+        var cont =  this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.88, 'finish_lf').setInteractive().setScale(0.27*stat.koeff, 0.27*stat.koeff);
         this.score = this.add.text(bg.x+bg_width*0.42, bg.y+bg_height*0.215, data.par.scene.score, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
         this.saving = this.add.text(bg.x+bg_width*0.6, bg.y+bg_height*0.295, data.par.scene.players_saving, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });
         this.debt = this.add.text(bg.x+bg_width*0.4, bg.y+bg_height*0.365, data.par.scene.players_debt, { font: `${stat.koeff*50}px Courier`, fill: '#000000' });

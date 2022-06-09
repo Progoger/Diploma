@@ -18,10 +18,10 @@ export default class characterChoice extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('bg', 'src/assets/common/bg.png');
-        this.load.image('home', 'src/assets/common/home.png');
-        this.load.image('complete', 'src/assets/common/complete.png');
-        this.load.image('charCustom', 'src/assets/characterChoice/characterCustomization.png');
+        this.load.image('bg_chch', 'src/assets/common/bg.png');
+        this.load.image('home_chch', 'src/assets/common/home.png');
+        this.load.image('complete_chch', 'src/assets/common/complete.png');
+        this.load.image('charCustom_chch', 'src/assets/characterChoice/characterCustomization.png');
         this.load.image('girl1', 'src/assets/characterChoice/girl1.png');
         this.load.image('girl2', 'src/assets/characterChoice/girl2.png');
         this.load.image('girl3', 'src/assets/characterChoice/girl3.png');
@@ -30,15 +30,15 @@ export default class characterChoice extends Phaser.Scene {
         }
 
     create() {
-        this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866);
-        var home = this.add.image(innerWidth/23, innerHeight/12, 'home').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
-        var complete = this.add.sprite(innerWidth*0.96, innerHeight*0.93, 'complete').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
+        this.add.sprite(innerWidth/2, innerHeight/2, 'bg_chch').setScale(1*stat.koeffX, 0.866*stat.koeffY);
+        var home = this.add.image(innerWidth/23, innerHeight/12, 'home_chch').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
+        var complete = this.add.sprite(innerWidth*0.96, innerHeight*0.93, 'complete_chch').setScale(0.1*stat.koeff, 0.1*stat.koeff).setInteractive();
         for (let i = 0; i < 5; i++){
             let tmp = new characterCard(this);
             this.characters.push(tmp);
             tmp.render(innerWidth*(0.11+0.195*i), innerHeight/2, 'girl'+(i+1), i);
         }
-        var customChar = this.add.sprite(innerWidth/2, innerHeight*0.9, 'charCustom').setScale(0.5*stat.koeff, 0.5*stat.koeff).setInteractive();
+        var customChar = this.add.sprite(innerWidth/2, innerHeight*0.9, 'charCustom_chch').setScale(0.5*stat.koeff, 0.5*stat.koeff).setInteractive();
         complete.on('pointerdown', function (event) {
             if (this.activeChar !== null)
             {

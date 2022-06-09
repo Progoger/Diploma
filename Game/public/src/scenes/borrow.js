@@ -12,21 +12,21 @@ export default class Borrow extends Phaser.Scene{
     }
 
     preload() {
-        this.load.image('bg', `src/assets/level2/borrow/bg.png`);
-        this.load.image('borrow', 'src/assets/level2/borrow/borrow.png');
+        this.load.image('bg_borrow', `src/assets/level2/borrow/bg.png`);
+        this.load.image('borrow_borrow', 'src/assets/level2/borrow/borrow.png');
         this.load.image('cross', 'src/assets/common/cross.png');
-        this.load.image('input', 'src/assets/level2/save/input.png');
+        this.load.image('input_borrow', 'src/assets/level2/save/input.png');
     }
 
     create(data) {
-        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0).setInteractive();
+        var bg = this.add.image(innerWidth/3, innerHeight/12, 'bg_borrow').setScale(0.33*stat.koeff, 0.33*stat.koeff).setOrigin(0).setInteractive();
         var bg_width = bg.width*0.33*stat.koeff;
         var bg_height = bg.height*0.33*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
-        var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.72, 'input').setScale(0.27*stat.koeff, 0.27*stat.koeff);
+        var input = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.72, 'input_borrow').setScale(0.27*stat.koeff, 0.27*stat.koeff);
         var textEntry = this.add.text(bg.x+bg_width*0.2, bg.y+bg_height*0.68, '', { font: `${58*stat.koeff}px Courier`, fill: '#ffff00' });
-        var borrow = this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.87, 'borrow').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
-        var cross = this.add.image(bg.x+bg_width*0.97, bg.y*1.05, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
+        var borrow = this.add.image(bg.x+bg_width*0.43, bg.y+bg_height*0.87, 'borrow_borrow').setInteractive().setScale(0.22*stat.koeff, 0.22*stat.koeff);
+        var cross = this.add.image(bg.x+bg_width*0.97, bg.y*1.05, 'cross_borrow').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 
         this.input.keyboard.on('keydown', function (event) {
             if (event.keyCode === 8 && textEntry.text.length > 0)

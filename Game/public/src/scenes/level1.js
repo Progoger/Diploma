@@ -14,12 +14,12 @@ export default class Level1 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('bg', 'src/assets/common/bg.png');
-        this.load.image('complete', 'src/assets/common/complete.png');
-        this.load.image('help', 'src/assets/common/help.png');
-        this.load.image('progress', 'src/assets/common/progress.png');
-        this.load.image('statistics', 'src/assets/common/statistics.png');
-        this.load.image('score', 'src/assets/common/score.png');
+        this.load.image('bg_l1', 'src/assets/common/bg.png');
+        this.load.image('complete_l1', 'src/assets/common/complete.png');
+        this.load.image('help_l1', 'src/assets/common/help.png');
+        this.load.image('progress_l1', 'src/assets/common/progress.png');
+        this.load.image('statistics_l1', 'src/assets/common/statistics.png');
+        this.load.image('score_l1', 'src/assets/common/score.png');
         this.load.image('expense_0', 'src/assets/level1/expense0.png');
         this.load.image('expense_1', 'src/assets/level1/expense1.png');
         this.load.image('expense_2', 'src/assets/level1/expense2.png');
@@ -78,12 +78,12 @@ export default class Level1 extends Phaser.Scene {
             'expense_9'
         )
         
-        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1, 0.866).setInteractive();
+        var bg = this.add.sprite(innerWidth/2, innerHeight/2, 'bg_l1').setScale(1*stat.koeffX, 0.866*stat.koeffY).setInteractive();
         this.add.image(innerWidth*0.945, innerHeight*0.15, 'avatar').setScale(0.2*stat.koeff, 0.2*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.4, 'help').setScale(0.1*stat.koeff, 0.1*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.55, 'progress').setScale(0.1*stat.koeff, 0.1*stat.koeff);
-        this.add.sprite(innerWidth*0.96, innerHeight*0.7, 'statistics').setScale(0.1*stat.koeff, 0.1*stat.koeff);
-        this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score').setScale(0.15*stat.koeff, 0.15*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.4, 'help_l1').setScale(0.1*stat.koeff, 0.1*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.55, 'progress_l1').setScale(0.1*stat.koeff, 0.1*stat.koeff);
+        this.add.sprite(innerWidth*0.96, innerHeight*0.7, 'statistics_l1').setScale(0.1*stat.koeff, 0.1*stat.koeff);
+        this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score_l1').setScale(0.15*stat.koeff, 0.15*stat.koeff);
         var textEntry = this.add.text(innerWidth*0.09, innerHeight*0.045, this.score, { font: `${75*stat.koeff}px Courier`, fill: '#ffede4' });
 
         let index = getRandomInt(this.len);
