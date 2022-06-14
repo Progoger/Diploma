@@ -5,15 +5,16 @@ export default class Beginning extends Phaser.Scene {
         super({
             key: 'Beginning'
         });
-
-        if (innerWidth/stat.common_width < innerHeight/stat.common_height){
-            stat.koeff = innerWidth/stat.common_width;
-        }
-        else{
-            stat.koeff = innerHeight/stat.common_height;
-        };
         stat.koeffX = innerWidth/stat.common_width;
         stat.koeffY = innerHeight/stat.common_height;
+
+        if (stat.koeffX < stat.koeffY){
+            stat.koeff = stat.koeffX;
+        }
+        else{
+            stat.koeff = stat.koeffY;
+        };
+        
     }
 
     preload() {
@@ -22,6 +23,7 @@ export default class Beginning extends Phaser.Scene {
     }
 
     create(data) {
+        this.clicked = false;
         if (data.video)
         {
             this.video = this.add.video(innerWidth/2, innerHeight/2, data.video).setScale(1*stat.koeffX, 0.866*stat.koeffY);
@@ -32,7 +34,13 @@ export default class Beginning extends Phaser.Scene {
         this.video.setPaused(false);
         this.video.play(true);
         this.input.on('pointerdown', function(pointer){
-            this.scene.start('mainMenu');
+            if (this.clicked === false){
+                this.video.setPaused(false);
+                this.clicked = true;
+            }
+            else{
+                this.scene.start('mainMenu');
+            }
         }, this);
 
         this.input.keyboard.on('keydown', function (event) {
@@ -41,6 +49,7 @@ export default class Beginning extends Phaser.Scene {
             }
             else if(event.keyCode === 32){
                 this.video.setPaused(false);
+                this.clicked = true;
             };
 
         }, this);

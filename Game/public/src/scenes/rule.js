@@ -33,8 +33,8 @@ export default class Rule extends Phaser.Scene{
         var bg_height = bg.height*0.72*stat.koeff;
         this.cameras.main.setViewport(0, 0, innerWidth, innerHeight);
         var text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
-        var left = this.add.image(bg.x+bg_width*0.06, bg.y+bg_height*0.53, 'left').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
-        var right = this.add.image(bg.x+bg_width*0.94, bg.y+bg_height*0.53, 'right').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
+        // var left = this.add.image(bg.x+bg_width*0.06, bg.y+bg_height*0.53, 'left').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
+        // var right = this.add.image(bg.x+bg_width*0.94, bg.y+bg_height*0.53, 'right').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
         var cross = this.add.image(bg.x+bg_width*0.94, bg.y+bg_height*0.08, 'cross').setScale(0.09*stat.koeff, 0.09*stat.koeff).setInteractive();
 
         if (data.sc){
@@ -47,21 +47,21 @@ export default class Rule extends Phaser.Scene{
             }, this);
         };
 
-        left.on('pointerdown', function() {
-            if (this.active !== 1){
-                this.active --;
-                text.destroy();
-                text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
-            }
-        }, this);
+        // left.on('pointerdown', function() {
+        //     if (this.active !== 1){
+        //         this.active --;
+        //         text.destroy();
+        //         text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
+        //     }
+        // }, this);
 
-        right.on('pointerdown', function() {
-            if (this.active !== 1){
-                this.active ++;
-                text.destroy();
-                text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
-            }
-        }, this);
+        // right.on('pointerdown', function() {
+        //     if (this.active !== 1){
+        //         this.active ++;
+        //         text.destroy();
+        //         text = this.add.image(bg.x+bg_width*0.5, bg.y+bg_height*0.54, data.sc+'_'+this.active).setScale(0.55*stat.koeff, 0.55*stat.koeff).setInteractive();
+        //     }
+        // }, this);
 
         cross.on('pointerdown', function() {
             let par = data.par.scene;

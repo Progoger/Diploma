@@ -5,7 +5,7 @@ export default class Zone {
         this.zone_type = zone_type;
 
         this.renderZone = (x, y, sprite) => {
-            let dropZone = scene.add.image(x, y, sprite).setInteractive().setScale(0.13*stat.koeff, 0.13*stat.koeff);
+            let dropZone = scene.add.image(x, y, sprite).setInteractive().setScale(0.25*stat.koeff, 0.25*stat.koeff);
             dropZone.input.dropZone = true;
             return dropZone;
         }

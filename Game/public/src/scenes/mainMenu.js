@@ -20,17 +20,6 @@ export default class mainMenu extends Phaser.Scene {
     }
 
     create() {
-        // if (innerWidth/stat.common_width < innerHeight/stat.common_height){
-        //     stat.koeff = innerWidth/stat.common_width;
-            
-        // }
-        // else{
-        //     stat.koeff = innerHeight/stat.common_height;
-        // };
-        // stat.koeffX = innerWidth/stat.common_width;
-        // stat.koeffY = innerHeight/stat.common_height;
-        
-        let self = this;
         this.add.sprite(innerWidth/2, innerHeight/2, 'bg').setScale(1*stat.koeffX, 0.866*stat.koeffY);
         var play = this.add.image(innerWidth/2, innerHeight/5, 'play').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();
         var rules = this.add.image(innerWidth/2, innerHeight/5*2, 'rules').setScale(0.25*stat.koeff, 0.25*stat.koeff).setInteractive();

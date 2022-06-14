@@ -1,6 +1,6 @@
 import Card from '../helpers/card.js';
 import Zone from '../helpers/zone.js';
-import { getRandomInt } from '../helpers/functions.js';'../helpers/functions.js';
+import { getRandomInt, sleep } from '../helpers/functions.js';'../helpers/functions.js';
 import { stat_record, stat } from '../helpers/statistics.js';
 
 export default class Level1 extends Phaser.Scene {
@@ -115,10 +115,10 @@ export default class Level1 extends Phaser.Scene {
         this.cards.splice(0, 1);
 
         let income = new Zone(this, "income");
-        income.renderZone(innerWidth*0.7, innerHeight*0.945, "income");
+        income.renderZone(innerWidth*0.7, innerHeight*0.885, "income");
     
         let expense = new Zone(this, "expense");
-        expense.renderZone(innerWidth*0.15, innerHeight*0.87, "expense");
+        expense.renderZone(innerWidth*0.15, innerHeight*0.885, "expense");
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
@@ -132,7 +132,7 @@ export default class Level1 extends Phaser.Scene {
         }, this);
 
         this.input.on('dragenter', function (pointer, gameObject, dropZone) {
-            dropZone.setTint(0x00ff00);
+            dropZone.setTint(0xD4D6AF);
         });
     
         this.input.on('dragleave', function (pointer, gameObject, dropZone) {
@@ -148,24 +148,38 @@ export default class Level1 extends Phaser.Scene {
             gameObject.input.enabled = false;
     
             if (dropZone.texture.key === gameObject.texture.key.split('_')[0]){
+                sleep(0).then(_=>{
+                    dropZone.setTint(0x1AD300);
+                    return sleep(300)
+                    
+                }).then(_=>{
+                    dropZone.clearTint();
+                });
+                
                 this.scene.score += 1;
                 textEntry.setText(this.scene.score);
 
                 stat_record.sendAnswer({
                     'correct': true
                 });
-                stat_record.enterLevel({
-                    'answer_number': 0
-                });
             }
             else {
+                sleep(0).then(_=>{
+                    dropZone.setTint(0xDF1616);
+                    return sleep(300)
+                    
+                }).then(_=>{
+                    dropZone.clearTint();
+                });
+
                 stat_record.sendAnswer({
                     'correct': false
-                });
-                stat_record.enterLevel({
-                    'answer_number': 0
-                });                
+                });               
             };
+
+            stat_record.enterLevel({
+                'answer_number': 0
+            }); 
             
             this.scene.tmp += 1;
             dropZone.clearTint();

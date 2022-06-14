@@ -141,7 +141,7 @@ export default class Level2 extends Phaser.Scene {
         this.add.sprite(innerWidth*0.96, innerHeight*0.62, 'statistics_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
         this.add.sprite(innerWidth*0.96, innerHeight*0.74, 'character_l2').setScale(0.09*stat.koeff, 0.09*stat.koeff);
         this.add.sprite(innerWidth*0.09, innerHeight*0.08, 'score_l2').setScale(0.15*stat.koeff, 0.15*stat.koeff);
-        this.score_txt = this.add.text(innerWidth*0.09, innerHeight*0.055, this.score, { font: `${55*stat.koeff}px Courier`, fill: '#ffede4' });
+        this.score_txt = this.add.text(innerWidth*0.08, innerHeight*0.055, this.score, { font: `${55*stat.koeff}px Courier`, fill: '#ffede4' });
         this.add.sprite(innerWidth*0.26, innerHeight*0.08, 'money').setScale(0.15*stat.koeff, 0.15*stat.koeff);
         this.money = this.add.text(innerWidth*0.24, innerHeight*0.06, this.players_money, { font: `${50*stat.koeff}px Courier`, fill: '#ffede4' });
         this.add.sprite(innerWidth*0.42, innerHeight*0.08, 'saving').setScale(0.15*stat.koeff, 0.15*stat.koeff);
@@ -241,14 +241,13 @@ export default class Level2 extends Phaser.Scene {
                 this.cells[this.active_cell].img.active = false;
                 this.cells[this.active_cell].img.setTint(0x696969);
                 this.active_cell = null;
-                var comp = this.add.sprite(innerWidth*0.96, innerHeight*0.93, 'complete_l2').setScale(0.08*stat.koeff, 0.08*stat.koeff).setInteractive().setTint(0x800000);
+                var comp = this.add.sprite(innerWidth*0.96, innerHeight*0.93, 'complete_l2').setScale(0.08*stat.koeff, 0.08*stat.koeff).setInteractive().setTint(0xc10020);
                 comp.on('pointerdown', function() {
                     this.score -= (this.players_debt/500)*0.5 + 0.5;
                     this.saving.setText(this.players_saving);
                     this.debt.setText(this.players_debt);
                     this.score_txt.setText(this.score);
-                    this.scene.launch("Level2Finish", {par: this.scene.scene});
-                    
+                    this.scene.launch("Level2Finish", {par: this.scene.scene});     
                 }, this);
             }
             else{
